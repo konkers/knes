@@ -1,0 +1,10 @@
+[timestart] 0
+[size] 1343 609
+[pos] -1 -1
+*-2.974207 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+@28
+rom_test.clk
+rom_test.oe_n
+@22
+rom_test.addr[15:0]
+rom_test.data[7:0]

@@ -1,0 +1,14 @@
+[timestart] 0
+[size] 1000 600
+[pos] -1 -1
+*-2.974207 22 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] k6502_test.
+@28
+k6502_test.clk
+k6502_test.rst_n
+k6502_test.sync
+@22
+k6502_test.a[15:0]
+k6502_test.d[7:0]
+@23
+k6502_test.rom.data[7:0]
