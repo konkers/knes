@@ -71,6 +71,46 @@ module k6502(
 	   .clk(clk),
 	   .rst_n(rst_n));
 
+   wire [1:0] 	  reg_sel;
+   wire 	  reg_r;
+   wire 	  reg_w;
+   
+   wire 	  ra_latch;
+   wire 	  ra_oe;
+
+   assign ra_latch = (reg_sel == `R_A) && reg_w;
+   assign ra_oe    = (reg_sel == `R_A) && reg_r;
+
+   register ra(.data(d),
+	       .latch(ra_latch),
+	       .oe(ra_oe),
+	       .rst_n(rst_n));
+   
+
+   wire 	  rx_latch;
+   wire 	  rx_oe;
+
+   assign rx_latch = (reg_sel == `R_X) && reg_w;
+   assign rx_oe    = (reg_sel == `R_X) && reg_r;
+
+   register rx(.data(d),
+	       .latch(rx_latch),
+	       .oe(rx_oe),
+	       .rst_n(rst_n));
+
+   
+   wire 	  ry_latch;
+   wire 	  ry_oe;
+
+   assign ry_latch = (reg_sel == `R_Y) && reg_w;
+   assign ry_oe    = (reg_sel == `R_Y) && reg_r;
+
+   register ry(.data(d),
+	       .latch(ry_latch),
+	       .oe(ry_oe),
+	       .rst_n(rst_n));
+   
+   
    wire [`X_BITS-1:0] x;
    wire [5:0] cycle;
    wire [7:0] ir;
@@ -86,6 +126,11 @@ module k6502(
    assign a = (x[`X_ADDR_MODE] == `ADDR_MODE_PC) ? pc :
 	      ((x[`X_ADDR_MODE] == `ADDR_MODE_DL) ? dl :
 	       16'hCAFE);
+
+   assign reg_sel    = x[`X_REG_SEL];
+   assign reg_r      = x[`X_REG_R];
+   assign reg_w      = x[`X_REG_W];
+   
       
    inst_seq inst_seq(.cycle(cycle),
 		     .sync(sync),

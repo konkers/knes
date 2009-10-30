@@ -14,31 +14,25 @@
 // limitations under the License.
 //
 
-`define X_SYNC_NEXT	0
+module register(
+    inout [7:0]  data,
+    input 	 latch,
+    input 	 oe,
+    input 	 rst_n);
 
-`define X_INC_PC	1
+   tri [7:0] 	 data;
+   wire 	 latch;
+   wire 	 oe;
+   wire 	 rst_n;
+	 
+   reg [7:0] 	 val;
 
-`define X_INC_DL	2
+   assign data = oe ? val : 8'hZZ;
 
-`define X_PC_LATCH_L	3
-
-`define X_PC_LATCH_H	4
-
-`define X_DL_LATCH_L	5
-
-`define X_DL_LATCH_H	6
-
-`define X_ADDR_MODE	8:7
-`define   ADDR_MODE_PC    2'b00
-`define   ADDR_MODE_DL    2'b01
-
-`define X_REG_SEL       10:9
-`define   R_N             2'b00
-`define   R_X             2'b00
-`define   R_Y             2'b01
-`define   R_A             2'b10
-
-`define X_REG_R		11
-`define X_REG_W		12
-
-`define X_BITS		13
+   always @(posedge latch or negedge rst_n) begin
+     if (rst_n == 0)
+       val <= 8'h00;
+     else
+       val <= data;
+   end
+endmodule
