@@ -16,6 +16,12 @@
 
 `include "k6502_defs.v"
 
+`define O 1'b0
+`define X 1'b1
+
+`define A_PC `ADDR_MODE_PC
+`define A_DL `ADDR_MODE_DL
+
 module mcode(
     input [7:0]  ir,
     input [5:0]  cycle,
@@ -31,26 +37,33 @@ module mcode(
       
    always @(mcode_state) begin
       case (mcode_state)
-	// reset
-	{8'h00, 6'b000000}: x <= {`ADDR_MODE_PC, `DL_LATCH_H_0, `DL_LATCH_L_0, `PC_LATCH_H_0, `PC_LATCH_L_0, `INC_DL_0, `INC_PC_0, `SYNC_NEXT_1};
-
-	// JMP
-	{8'h4C, 6'b000001}: x <= {`ADDR_MODE_PC, `DL_LATCH_H_0, `DL_LATCH_L_0, `PC_LATCH_H_0, `PC_LATCH_L_0, `INC_DL_0, `INC_PC_1, `SYNC_NEXT_0};
-	{8'h4C, 6'b000010}: x <= {`ADDR_MODE_PC, `DL_LATCH_H_0, `DL_LATCH_L_0, `PC_LATCH_H_0, `PC_LATCH_L_1, `INC_DL_0, `INC_PC_1, `SYNC_NEXT_0};
-	{8'h4C, 6'b000100}: x <= {`ADDR_MODE_PC, `DL_LATCH_H_0, `DL_LATCH_L_0, `PC_LATCH_H_1, `PC_LATCH_L_0, `INC_DL_0, `INC_PC_1, `SYNC_NEXT_1};
-
-	// JMP
-	{8'h6C, 6'b000001}: x <= {`ADDR_MODE_PC, `DL_LATCH_H_0, `DL_LATCH_L_0, `PC_LATCH_H_0, `PC_LATCH_L_0, `INC_DL_0, `INC_PC_1, `SYNC_NEXT_0};
-	{8'h6C, 6'b000010}: x <= {`ADDR_MODE_PC, `DL_LATCH_H_0, `DL_LATCH_L_1, `PC_LATCH_H_0, `PC_LATCH_L_0, `INC_DL_0, `INC_PC_1, `SYNC_NEXT_0};
-	{8'h6C, 6'b000100}: x <= {`ADDR_MODE_DL, `DL_LATCH_H_1, `DL_LATCH_L_0, `PC_LATCH_H_0, `PC_LATCH_L_0, `INC_DL_0, `INC_PC_1, `SYNC_NEXT_0};
-	{8'h6C, 6'b001000}: x <= {`ADDR_MODE_DL, `DL_LATCH_H_0, `DL_LATCH_L_0, `PC_LATCH_H_0, `PC_LATCH_L_1, `INC_DL_1, `INC_PC_0, `SYNC_NEXT_0};
-	{8'h6C, 6'b010000}: x <= {`ADDR_MODE_PC, `DL_LATCH_H_0, `DL_LATCH_L_0, `PC_LATCH_H_1, `PC_LATCH_L_0, `INC_DL_0, `INC_PC_0, `SYNC_NEXT_1};
-
+	//                                D   D   P   P
+	//                         A      L   L   C   C           S
+	//                         D                              Y
+	//                         D      L   L   L   L           N
+	//                         R      A   A   A   A   I   I   C
+	//                                T   T   T   T   N   N    
+	//                         M      C   C   C   C   C   C   N
+	//                         O      H   H   H   H           E
+	//                         D                      D   P   X
+	//                         E      H   L   H   L   L   C   T
+    	// reset
+	{8'h00, 6'b000000}: x <= {`A_PC, `O, `O, `O, `O, `O, `X, `X};
+	// JMP imm
+	{8'h4C, 6'b000001}: x <= {`A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{8'h4C, 6'b000010}: x <= {`A_PC, `O, `O, `O, `X, `O, `X, `O};
+	{8'h4C, 6'b000100}: x <= {`A_PC, `O, `O, `X, `O, `O, `X, `X};
+	// JMP ind
+	{8'h6C, 6'b000001}: x <= {`A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{8'h6C, 6'b000010}: x <= {`A_PC, `O, `X, `O, `O, `O, `X, `O};
+	{8'h6C, 6'b000100}: x <= {`A_DL, `X, `O, `O, `O, `O, `X, `O};
+	{8'h6C, 6'b001000}: x <= {`A_DL, `O, `O, `O, `X, `X, `O, `O};
+	{8'h6C, 6'b010000}: x <= {`A_PC, `O, `O, `X, `O, `O, `O, `X};
 	// NOP
-	{8'hEA, 6'b000001}: x <= {`ADDR_MODE_PC, `DL_LATCH_H_0, `DL_LATCH_L_0, `PC_LATCH_H_0, `PC_LATCH_L_0, `INC_DL_0, `INC_PC_0, `SYNC_NEXT_0};
-	{8'hEA, 6'b000010}: x <= {`ADDR_MODE_PC, `DL_LATCH_H_0, `DL_LATCH_L_0, `PC_LATCH_H_0, `PC_LATCH_L_0, `INC_DL_0, `INC_PC_1, `SYNC_NEXT_1};
+	{8'hEA, 6'b000001}: x <= {`A_PC, `O, `O, `O, `O, `O, `O, `O};
+	{8'hEA, 6'b000010}: x <= {`A_PC, `O, `O, `O, `O, `O, `X, `X};
 
-	default:            x <= {`ADDR_MODE_PC, `DL_LATCH_H_0, `DL_LATCH_L_0, `PC_LATCH_H_0, `PC_LATCH_L_0, `INC_DL_0, `INC_PC_0, `SYNC_NEXT_1};
+	default:            x <= {`A_PC, `O, `O, `O, `O, `O, `O, `X};
       endcase
    end
 endmodule 
