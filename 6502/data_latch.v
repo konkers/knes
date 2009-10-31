@@ -15,18 +15,12 @@
 //
 
 module data_latch(
-    input [7:0]   data_in,
-    output [15:0] data_out,
-    input 	  latch_l,
-    input 	  latch_h,
-    input 	  inc);
+    input [7:0]       data_in,
+    output reg [15:0] data_out,
+    input 	      latch_l,
+    input 	      latch_h,
+    input 	      inc);
 
-   wire [7:0] 	  data_in;
-   reg [15:0] 	  data_out;
-   wire 	  latch_l;
-   wire 	  latch_h;
-   wire 	  inc;
- 	  
    always @(posedge latch_l or posedge latch_h or posedge inc) begin
       if (latch_l == 1)
 	data_out[7:0] = data_in;

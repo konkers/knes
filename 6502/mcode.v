@@ -31,13 +31,9 @@
 `define C_5	6'b100000
 
 module mcode(
-    input [7:0]  ir,
-    input [5:0]  cycle,
-    output [`X_BITS-1:0] x);
-   
-   wire [7:0] 	ir;
-   wire [5:0] 	cycle;
-   reg [`X_BITS-1:0] 	x;
+    input [7:0]               ir,
+    input [5:0]               cycle,
+    output reg [`X_BITS-1:0]  x);
 
    wire [14:0] 	mcode_state;
 

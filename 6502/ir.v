@@ -15,16 +15,11 @@
 //
 
 module ir(
-    output [7:0] ir,
-    input [7:0]  data,
-    input 	 sync,
-    input 	 rst_n);
+    output reg [7:0] ir,
+    input [7:0]      data,
+    input 	     sync,
+    input 	     rst_n);
 
-   reg [7:0] 	 ir;
-   wire [7:0] 	 data;
-   wire 	 sync;
-   wire 	 rst_n;
-   
    always @(posedge sync or negedge rst_n) begin
       if (rst_n == 1'b0) begin
 	 ir = 8'h00;

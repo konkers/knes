@@ -23,13 +23,6 @@ module k6502(
     input 	  rst_n,
     output 	  sync);
 
-
-   wire [15:0] 	  a;
-   tri [7:0] 	  d;
-   wire 	  clk;
-   wire 	  rst_n;
-   wire 	  sync;
- 	  
    assign d = 8'hZZ;
 
 
@@ -141,10 +134,10 @@ module k6502(
 	       .cycle(cycle),
 	       .x(x));
 
-   ir ir(.ir(ir),
-	 .data(d),
-	 .sync(sync),
-	 .rst_n(rst_n));
+   ir ir_reg(.ir(ir),
+	     .data(d),
+	     .sync(sync),
+	     .rst_n(rst_n));
 
 
 endmodule

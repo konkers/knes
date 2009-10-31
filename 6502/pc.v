@@ -14,37 +14,19 @@
 // limitations under the License.
 //
 
-module pc (addr,
-	   carry_in,
-	   carry_out,
-	   data,
-	   latch,
-	   sync,
-	   clk,
-	   rst_n);
+module pc (
+    output reg [7:0] addr,
+    input 	     carry_in,
+    output 	     carry_out,
+    input [7:0]      data,
+    input 	     latch,
+    input 	     sync,
+    input 	     clk,
+    input 	     rst_n);
 
-   output [7:0] addr;
-   input 	carry_in;
-   output 	carry_out;
-   input [7:0] 	data;
-   input 	latch;
-   input 	sync;
-   input 	clk;
-   input 	rst_n;
-   
-   
-   reg [7:0]  addr;
-   wire	      carry_in;
-   wire	      carry_out;
-   wire [7:0] data;
-   wire       latch;
-   wire       sync;
-   wire       clk;
-   wire       rst_n;
-
-   reg [7:0]  new_addr;
-   reg        update;
-   wire[7:0]  addr_inc;
+   reg [7:0] 	     new_addr;
+   reg 		     update;
+   wire [7:0] 	     addr_inc;
        
    assign {carry_out, addr_inc} = addr + carry_in;
 

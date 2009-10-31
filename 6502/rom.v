@@ -20,7 +20,6 @@ module rom (
     input 	 oe_n);
 
    reg [7:0] 	 rom[0:31];
-   tri [7:0] 	 data;
    
    assign data = (oe_n == 1'b0) ? rom[addr] : 16'hZZZZ;
    

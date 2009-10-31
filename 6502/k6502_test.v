@@ -14,7 +14,7 @@
 // limitations under the License.
 //
 
-`timescale 1ns/1ns
+`timescale 1ns/1ps
 
 module k6502_test;
 
@@ -37,16 +37,16 @@ module k6502_test;
    initial // Clock generator
      begin
 	clk = 1;
-	forever #1 clk = !clk;
+	forever #125 clk = !clk;
      end
 
    initial	// Test stimulus
      begin
 	rst_n = 0;
-	#4 rst_n = 1;
+	#500 rst_n = 1;
      end
 
-   initial #100 $finish;
+   initial #5000 $finish;
    initial begin
       $dumpfile("k6502_test.vcd");
       $dumpvars(0,k6502_test);

@@ -15,15 +15,10 @@
 //
 
 module inst_seq(
-    output [5:0] cycle,
-    output 	 sync,
-    input 	 next_sync,
-    input 	 clk);
-
-   reg [5:0] 	 cycle;
-   reg 		 sync;
-   wire 	 next_sync;
-   wire 	 clk;
+    output reg [5:0] cycle,
+    output reg 	     sync,
+    input 	     next_sync,
+    input 	     clk);
 
    always @(posedge clk) begin
       if (next_sync == 1) begin

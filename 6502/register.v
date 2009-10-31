@@ -20,11 +20,6 @@ module register(
     input 	 oe,
     input 	 rst_n);
 
-   tri [7:0] 	 data;
-   wire 	 latch;
-   wire 	 oe;
-   wire 	 rst_n;
-	 
    reg [7:0] 	 val;
 
    assign data = oe ? val : 8'hZZ;
