@@ -41,42 +41,72 @@ module mcode(
       
    always @(mcode_state) begin
       case (mcode_state)
-	//                                             D   D   P   P
-	//                    P                 A      L   L   C   C           S
-	//                    C                 D                              Y
-	//                                R     D      L   L   L   L           N
-	//                    U           E     R      A   A   A   A   I   I   C
-	//                    P   R   R   G            T   T   T   T   N   N    
-	//                    D   E   E         M      C   C   C   C   C   C   N
-	//                    A   G   G   S     O      H   H   H   H           E
-	//                    T           E     D                      D   P   X
-	//                    E   W   R   L     E      H   L   H   L   L   C   T
+	//                                                    D   D   P   P
+	//                               P             A      L   L   C   C           S
+	//                        D      C             D                              Y
+	//                        A              R     D      L   L   L   L           N
+	//                        T      U       E     R      A   A   A   A   I   I   C
+	//                        A      P   R   G            T   T   T   T   N   N    
+	//                               D   E         M      C   C   C   C   C   C   N
+	//                        S      A   G   S     O      H   H   H   H           E
+	//                    R   E      T       E     D                      D   P   X
+	//                    W   L      E   W   L     E      H   L   H   L   L   C   T
     	// reset
-	{8'h00, `C_N}: x <= {`O, `O, `O, `R_Y, `A_PC, `O, `O, `O, `O, `O, `O, `X};
+	{8'h00, `C_N}: x <= {`R, `D_DI, `O, `O, `R_Y, `A_PC, `O, `O, `O, `O, `O, `O, `X};
 	// JMP imm
-	{8'h4C, `C_0}: x <= {`O, `O, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
-	{8'h4C, `C_1}: x <= {`O, `O, `O, `R_N, `A_PC, `O, `O, `O, `X, `O, `X, `O};
-	{8'h4C, `C_2}: x <= {`X, `O, `O, `R_N, `A_PC, `O, `O, `X, `O, `O, `X, `X};
+	{8'h4C, `C_0}: x <= {`R, `D_DI, `O, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{8'h4C, `C_1}: x <= {`R, `D_DI, `O, `O, `R_N, `A_PC, `O, `O, `O, `X, `O, `X, `O};
+	{8'h4C, `C_2}: x <= {`R, `D_DI, `X, `O, `R_N, `A_PC, `O, `O, `X, `O, `O, `X, `X};
 	// JMP ind
-	{8'h6C, `C_0}: x <= {`O, `O, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
-	{8'h6C, `C_1}: x <= {`O, `O, `O, `R_N, `A_PC, `O, `X, `O, `O, `O, `X, `O};
-	{8'h6C, `C_2}: x <= {`O, `O, `O, `R_N, `A_DL, `X, `O, `O, `O, `O, `X, `O};
-	{8'h6C, `C_3}: x <= {`O, `O, `O, `R_N, `A_DL, `O, `O, `O, `X, `X, `O, `O};
-	{8'h6C, `C_4}: x <= {`X, `O, `O, `R_N, `A_PC, `O, `O, `X, `O, `O, `O, `X};
+	{8'h6C, `C_0}: x <= {`R, `D_DI, `O, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{8'h6C, `C_1}: x <= {`R, `D_DI, `O, `O, `R_N, `A_PC, `O, `X, `O, `O, `O, `X, `O};
+	{8'h6C, `C_2}: x <= {`R, `D_DI, `O, `O, `R_N, `A_DL, `X, `O, `O, `O, `O, `X, `O};
+	{8'h6C, `C_3}: x <= {`R, `D_DI, `O, `O, `R_N, `A_DL, `O, `O, `O, `X, `X, `O, `O};
+	{8'h6C, `C_4}: x <= {`R, `D_DI, `X, `O, `R_N, `A_PC, `O, `O, `X, `O, `O, `O, `X};
 	// LDA imm
-	{8'hA9, `C_0}: x <= {`O, `O, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
-	{8'hA9, `C_1}: x <= {`O, `X, `O, `R_A, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	{8'hA9, `C_0}: x <= {`R, `D_DI, `O, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{8'hA9, `C_1}: x <= {`R, `D_DI, `O, `X, `R_A, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	// LDA abs
+	{8'hAD, `C_0}: x <= {`R, `D_DI, `O, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{8'hAD, `C_1}: x <= {`R, `D_DI, `O, `O, `R_N, `A_PC, `O, `X, `O, `O, `O, `X, `O};
+	{8'hAD, `C_2}: x <= {`R, `D_DI, `O, `O, `R_N, `A_DL, `X, `O, `O, `O, `O, `X, `O};
+	{8'hAD, `C_3}: x <= {`R, `D_DI, `O, `X, `R_A, `A_PC, `O, `O, `O, `O, `O, `O, `X};
 	// LDX imm
-	{8'hA2, `C_0}: x <= {`O, `O, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
-	{8'hA2, `C_1}: x <= {`O, `X, `O, `R_X, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	{8'hA2, `C_0}: x <= {`R, `D_DI, `O, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{8'hA2, `C_1}: x <= {`R, `D_DI, `O, `X, `R_X, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	// LDX abs
+	{8'hAE, `C_0}: x <= {`R, `D_DI, `O, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{8'hAE, `C_1}: x <= {`R, `D_DI, `O, `O, `R_N, `A_PC, `O, `X, `O, `O, `O, `X, `O};
+	{8'hAE, `C_2}: x <= {`R, `D_DI, `O, `O, `R_N, `A_DL, `X, `O, `O, `O, `O, `X, `O};
+	{8'hAE, `C_3}: x <= {`R, `D_DI, `O, `X, `R_X, `A_PC, `O, `O, `O, `O, `O, `O, `X};
 	// LDY imm
-	{8'hA0, `C_0}: x <= {`O, `O, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
-	{8'hA0, `C_1}: x <= {`O, `X, `O, `R_Y, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	{8'hA0, `C_0}: x <= {`R, `D_DI, `O, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{8'hA0, `C_1}: x <= {`R, `D_DI, `O, `X, `R_Y, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	// LDY abs
+	{8'hAC, `C_0}: x <= {`R, `D_DI, `O, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{8'hAC, `C_1}: x <= {`R, `D_DI, `O, `O, `R_N, `A_PC, `O, `X, `O, `O, `O, `X, `O};
+	{8'hAC, `C_2}: x <= {`R, `D_DI, `O, `O, `R_N, `A_DL, `X, `O, `O, `O, `O, `X, `O};
+	{8'hAC, `C_3}: x <= {`R, `D_DI, `O, `X, `R_Y, `A_PC, `O, `O, `O, `O, `O, `O, `X};
 	// NOP
-	{8'hEA, `C_0}: x <= {`O, `O, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
-	{8'hEA, `C_1}: x <= {`O, `O, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	{8'hEA, `C_0}: x <= {`R, `D_DI, `O, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
+	{8'hEA, `C_1}: x <= {`R, `D_DI, `O, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	// STA abs
+	{8'h8D, `C_0}: x <= {`R, `D_DI, `O, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{8'h8D, `C_1}: x <= {`R, `D_DI, `O, `O, `R_N, `A_PC, `O, `X, `O, `O, `O, `X, `O};
+	{8'h8D, `C_2}: x <= {`W, `D_RA, `O, `O, `R_N, `A_DL, `X, `O, `O, `O, `O, `X, `O};
+	{8'h8D, `C_3}: x <= {`R, `D_DI, `O, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `X};
+	// STX abs
+	{8'h8E, `C_0}: x <= {`R, `D_DI, `O, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{8'h8E, `C_1}: x <= {`R, `D_DI, `O, `O, `R_N, `A_PC, `O, `X, `O, `O, `O, `X, `O};
+	{8'h8E, `C_2}: x <= {`W, `D_RX, `O, `O, `R_N, `A_DL, `X, `O, `O, `O, `O, `X, `O};
+	{8'h8E, `C_3}: x <= {`R, `D_DI, `O, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `X};
+	// STY abs
+	{8'h8C, `C_0}: x <= {`R, `D_DI, `O, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{8'h8C, `C_1}: x <= {`R, `D_DI, `O, `O, `R_N, `A_PC, `O, `X, `O, `O, `O, `X, `O};
+	{8'h8C, `C_2}: x <= {`W, `D_RY, `O, `O, `R_N, `A_DL, `X, `O, `O, `O, `O, `X, `O};
+	{8'h8C, `C_3}: x <= {`R, `D_DI, `O, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `X};
 
-	default:       x <= {`O, `O, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
+	default:       x <= {`R, `D_DI, `O, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
       endcase
    end
 endmodule 

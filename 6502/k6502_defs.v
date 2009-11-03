@@ -39,9 +39,18 @@
 `define   R_Y             2'b01
 `define   R_A             2'b10
 
-`define X_REG_R		11
-`define X_REG_W		12
+`define X_REG_W		11
 
-`define X_PC_UPDATE	13
+`define X_PC_UPDATE	12
 
-`define X_BITS		14
+`define X_DATA_SEL      15:13
+`define   D_DI            3'h0
+`define   D_RA            3'h1
+`define   D_RX            3'h2
+`define   D_RY            3'h3
+
+`define X_RW		16
+`define   R               1'b0
+`define   W               1'b1
+
+`define X_BITS		17

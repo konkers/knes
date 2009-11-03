@@ -15,19 +15,15 @@
 //
 
 module register(
-    inout [7:0]  data,
-    input 	 latch,
-    input 	 oe,
-    input 	 rst_n);
-
-   reg [7:0] 	 val;
-
-   assign data = oe ? val : 8'hZZ;
+    input [7:0]       data_in,
+    output reg [7:0]  data_out,
+    input 	      latch,
+    input 	      rst_n);
 
    always @(posedge latch or negedge rst_n) begin
      if (rst_n == 0)
-       val <= 8'h00;
+       data_out <= 8'h00;
      else
-       val <= data;
+       data_out <= data_in;
    end
 endmodule

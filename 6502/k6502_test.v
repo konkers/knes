@@ -25,6 +25,7 @@ module k6502_test;
    reg 	       clk;
    reg 	       rst_n;
    wire        sync;
+   wire        rw;
 `ifdef DEBUG
    wire [`X_BITS-1:0] x;
    wire [15:0] 	      pc;
@@ -43,11 +44,12 @@ module k6502_test;
 	       .d(d),
 	       .clk(clk),
 	       .rst_n(rst_n),
-	       .sync(sync));
+	       .sync(sync),
+	       .rw(rw));
 
    rom rom(.addr(a),
 	   .data(d),
-	   .oe_n(1'b0));
+	   .oe_n(rw));
       
    initial // Clock generator
      begin

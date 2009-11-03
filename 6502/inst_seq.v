@@ -18,10 +18,13 @@ module inst_seq(
     output reg [5:0] cycle,
     output reg 	     sync,
     input 	     next_sync,
+    input 	     rst_n,
     input 	     clk);
 
    always @(posedge clk) begin
-      if (next_sync == 1) begin
+      if (rst_n == 1'b0) begin
+	 cycle <= 6'b000000;
+      end else if (next_sync == 1) begin
 	 cycle <= 6'b000001;
       end else begin
 	 cycle[5:0] <= {cycle[4:0],1'b0};
