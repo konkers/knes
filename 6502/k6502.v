@@ -17,16 +17,25 @@
 `include "k6502_defs.v"
 
 module k6502(
+`ifdef DEBUG
+    output [`X_BITS-1:0] x,
+    output [15:0] 	 pc,
+    output [15:0] 	 dl, 	 
+    output [7:0] 	 ir,
+`endif
     output [15:0] a,
     inout [7:0]   d,
     input 	  clk,
     input 	  rst_n,
-    output 	  sync);
+    output 	  sync
+);
 
    assign d = 8'hZZ;
 
 
+`ifndef DEBUG
    wire [15:0] 	  dl;
+`endif
    wire 	  dl_latch_l;
    wire 	  dl_latch_h;
    wire 	  dl_inc;
@@ -37,21 +46,23 @@ module k6502(
 			 .latch_h(dl_latch_h),
 			 .inc(dl_inc));
       
+`ifndef DEBUG
    wire [15:0] 	  pc;
+`endif
    wire 	  pc_inc;
    wire 	  carry_out_l;
    wire 	  carry_out_h;
    wire 	  pc_latch_l;
    wire 	  pc_latch_h;
    wire		  next_sync;
-
+   wire 	  pc_update;
    
    pc pcl (.addr(pc[7:0]),
 	   .carry_in(pc_inc),
 	   .carry_out(carry_out_l),
 	   .data(d),
 	   .latch(pc_latch_l),
-	   .sync(next_sync),
+	   .update(pc_update),
 	   .clk(clk),
 	   .rst_n(rst_n));
    
@@ -60,7 +71,7 @@ module k6502(
 	   .carry_out(carry_out_h),
 	   .data(d),
 	   .latch(pc_latch_h),
-	   .sync(next_sync),
+	   .update(pc_update),
 	   .clk(clk),
 	   .rst_n(rst_n));
 
@@ -104,9 +115,11 @@ module k6502(
 	       .rst_n(rst_n));
    
    
+`ifndef DEBUG
    wire [`X_BITS-1:0] x;
-   wire [5:0] cycle;
    wire [7:0] ir;
+`endif
+   wire [5:0] cycle;
    
    assign next_sync =  x[`X_SYNC_NEXT] & rst_n;
    assign pc_inc =     x[`X_INC_PC] & rst_n;
@@ -116,13 +129,18 @@ module k6502(
    assign dl_latch_l = x[`X_DL_LATCH_L] & rst_n;
    assign dl_latch_h = x[`X_DL_LATCH_H] & rst_n;
 
-   assign a = (x[`X_ADDR_MODE] == `ADDR_MODE_PC) ? pc :
-	      ((x[`X_ADDR_MODE] == `ADDR_MODE_DL) ? dl :
-	       16'hCAFE);
+   addr_latch addr_latch(.a(a),
+			 .clk(clk),
+			 .addr_sel(x[`X_ADDR_MODE]),
+			 .addr0(pc),
+			 .addr1(dl),
+			 .addr2(16'hDEAD),
+			 .addr3(16'hBEEF));
 
    assign reg_sel    = x[`X_REG_SEL];
    assign reg_r      = x[`X_REG_R];
    assign reg_w      = x[`X_REG_W];
+   assign pc_update  = x[`X_PC_UPDATE];
    
       
    inst_seq inst_seq(.cycle(cycle),

@@ -13,35 +13,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-`define DEBUG
 
-`define X_SYNC_NEXT	0
+module addr_latch(
+    output [15:0] a,
+    input 	      clk,
+    input [1:0]       addr_sel,
+    input [15:0]      addr0,
+    input [15:0]      addr1,
+    input [15:0]      addr2,
+    input [15:0]      addr3);
+   
+   reg [1:0] 	      sel;
 
-`define X_INC_PC	1
-
-`define X_INC_DL	2
-
-`define X_PC_LATCH_L	3
-
-`define X_PC_LATCH_H	4
-
-`define X_DL_LATCH_L	5
-
-`define X_DL_LATCH_H	6
-
-`define X_ADDR_MODE	8:7
-`define   ADDR_MODE_PC    2'b00
-`define   ADDR_MODE_DL    2'b01
-
-`define X_REG_SEL       10:9
-`define   R_N             2'b00
-`define   R_X             2'b00
-`define   R_Y             2'b01
-`define   R_A             2'b10
-
-`define X_REG_R		11
-`define X_REG_W		12
-
-`define X_PC_UPDATE	13
-
-`define X_BITS		14
+   assign a = (sel == 2'b00 ? addr0 :
+	       (sel == 2'b01 ? addr1 :
+		(sel == 2'b10 ? addr2 :
+		 addr3)));
+   
+   always @(negedge clk) begin
+      sel <= addr_sel;
+   end
+endmodule
+		  

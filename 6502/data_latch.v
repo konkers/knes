@@ -21,12 +21,29 @@ module data_latch(
     input 	      latch_h,
     input 	      inc);
 
-   always @(posedge latch_l or posedge latch_h or posedge inc) begin
-      if (latch_l == 1)
-	data_out[7:0] = data_in;
-      else if (latch_h == 1)
-	data_out[15:8] = data_in;
-      else if (inc == 1)
-	data_out = data_out + 1;
+   wire 	      carry;
+   wire [15:0] 	      data_inc;
+
+   wire 	      tmp_l;
+   wire 	      tmp_h;
+   
+   
+   assign {carry, data_inc} = data_out + 1;
+   assign tmp_l = latch_l | inc;
+   assign tmp_h = latch_h | inc;
+
+   always @(posedge tmp_l) begin
+      if (inc == 1'b0)
+	data_out[7:0] <= data_in;
+      else
+	data_out[7:0] <= data_inc[7:0];
    end
+ 
+   always @(posedge tmp_h) begin
+      if (inc == 1'b0)
+	data_out[15:8] <= data_in;
+      else
+	data_out[15:8] <= data_inc[15:8];
+   end
+ 
 endmodule

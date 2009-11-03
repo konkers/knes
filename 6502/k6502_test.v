@@ -16,6 +16,8 @@
 
 `timescale 1ns/1ps
 
+`include "k6502_defs.v"
+
 module k6502_test;
 
    wire [15:0] a;
@@ -23,8 +25,21 @@ module k6502_test;
    reg 	       clk;
    reg 	       rst_n;
    wire        sync;
+`ifdef DEBUG
+   wire [`X_BITS-1:0] x;
+   wire [15:0] 	      pc;
+   wire [15:0]      dl;
+   wire [7:0]      ir;
+`endif
 
-   k6502 k6502(.a(a),
+   k6502 k6502(
+`ifdef DEBUG
+	       .x(x),
+	       .pc(pc),
+	       .dl(dl),
+	       .ir(ir),
+`endif
+	       .a(a),
 	       .d(d),
 	       .clk(clk),
 	       .rst_n(rst_n),
@@ -46,7 +61,7 @@ module k6502_test;
 	#500 rst_n = 1;
      end
 
-   initial #5000 $finish;
+   initial #10000 $finish;
    initial begin
       $dumpfile("k6502_test.vcd");
       $dumpvars(0,k6502_test);

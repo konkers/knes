@@ -20,12 +20,11 @@ module pc (
     output 	     carry_out,
     input [7:0]      data,
     input 	     latch,
-    input 	     sync,
+    input 	     update,
     input 	     clk,
     input 	     rst_n);
 
    reg [7:0] 	     new_addr;
-   reg 		     update;
    wire [7:0] 	     addr_inc;
        
    assign {carry_out, addr_inc} = addr + carry_in;
@@ -33,23 +32,15 @@ module pc (
    always @ (negedge clk or negedge rst_n) begin
 	if (rst_n == 1'b0) begin
 	   addr <= 8'h00;
-	end else if ({sync, update} == 2'b11) begin
+	end else if (update == 1'b1) begin
 	   addr <= new_addr;
 	end else begin
 	   addr <= addr_inc;
 	end
    end
-	  
-   always @ (posedge latch or negedge sync or negedge rst_n)
+
+   always @(posedge latch)
      begin
-	if (rst_n == 1'b0) begin
-	   new_addr <= 8'h00;
-	   update <= 0;
-	end else if (latch == 1'b1) begin
-	      new_addr <= data;
-	      update <= 1'b1;
-	end else if (sync == 1'b0) begin
-	   update <= 1'b0;
-	end
+	new_addr <= data;
      end
 endmodule
