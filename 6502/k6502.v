@@ -142,7 +142,20 @@ module k6502(
    assign data_sel   = x[`X_DATA_SEL];
    assign data_sel   = x[`X_DATA_SEL];
    assign rw_in      = x[`X_RW];
-   
+
+   wire       rst;
+   wire       nmi;
+   wire       irq;
+
+   int_seq int_seq(.clk(clk),
+		   .sync(next_sync),
+		   .rst_n(rst_n),
+		   .nmi_n(1'b1),
+		   .irq_n(1'b1),
+		   .rst(rst),
+		   .nmi(nmi),
+		   .irq(irq));
+      
    inst_seq inst_seq(.cycle(cycle),
 		     .sync(sync),
 		     .next_sync(next_sync),
@@ -151,12 +164,19 @@ module k6502(
 
    mcode mcode(.ir(ir),
 	       .cycle(cycle),
+	       .rst(rst),
+	       .nmi(nmi),
+	       .irq(irq),
 	       .x(x));
 
    ir ir_reg(.ir(ir),
 	     .data(data),
 	     .sync(sync),
 	     .rst_n(rst_n));
+
+   wire [7:0] fi;
+   assign fi = (rst == 1'b1 ? 8'hFC :
+		(nmi == 1'b1 ? 8'hFA : 8'hFE));
 
    data_mux data_mux(.data(data),
 		     .clk(clk),
@@ -168,7 +188,7 @@ module k6502(
 		     .data2(rx_data),
 		     .data3(ry_data),
 		     .data4(8'hFF),
-		     .data5(8'hFF),
+		     .data5(fi),
 		     .data6(8'hFF),
 		     .data7(8'hFF));
 

@@ -47,9 +47,9 @@ module k6502_test;
 	       .sync(sync),
 	       .rw(rw));
 
-   rom rom(.addr(a),
+   rom rom(.addr({1'b0, a[14:0]}),
 	   .data(d),
-	   .oe_n(rw));
+	   .oe_n(rw & a[15]));
       
    initial // Clock generator
      begin

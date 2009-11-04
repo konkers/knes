@@ -26,6 +26,8 @@ module inst_seq(
 	 cycle <= 6'b000000;
       end else if (next_sync == 1) begin
 	 cycle <= 6'b000001;
+      end else if (cycle == 6'b000000) begin
+	 cycle <= 6'b000001;
       end else begin
 	 cycle[5:0] <= {cycle[4:0],1'b0};
       end

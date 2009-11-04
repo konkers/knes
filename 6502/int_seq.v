@@ -14,15 +14,29 @@
 // limitations under the License.
 //
 
-module rom (
-    input [15:0] addr,
-    inout [7:0]  data,
-    input 	 oe_n);
+module int_seq(
+    input clk,
+    input sync,
+    input  rst_n,
+    input  nmi_n,
+    input  irq_n,
+    output rst,
+    output nmi,
+    output irq);
 
-   reg [7:0] 	 rom[0:(32 * 1024 - 1)];
+   wire [2:0] ints;
+   reg 	      rst_latch;
    
-   assign data = (oe_n == 1'b0) ? rom[addr] : 16'hZZZZ;
+   assign ints = {rst_latch, nmi_n, irq_n};
+   assign {rst, nmi, irq} = (rst_latch == 1'b1 ? 3'b100 :
+			     (nmi_n == 1'b0 ? 3'b010 :
+			      (irq_n == 1'b0 ? 3'b001 : 3'b000)));
    
-   initial $readmemh("rom.txt", rom);
+   always @(negedge clk) begin
+      if (rst_n == 1'b0)
+	rst_latch = 1'b1;
+      else if (sync == 1'b1)
+	rst_latch = 1'b0;
+   end
+     
 endmodule
-	    

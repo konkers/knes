@@ -48,6 +48,8 @@
 `define   D_RA            3'h1
 `define   D_RX            3'h2
 `define   D_RY            3'h3
+`define   D_FF            3'h4
+`define   D_FI            3'h5
 
 `define X_RW		16
 `define   R               1'b0
