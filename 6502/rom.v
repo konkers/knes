@@ -21,7 +21,7 @@ module rom (
 
    reg [7:0] 	 rom[0:(32 * 1024 - 1)];
    
-   assign data = (oe_n == 1'b0) ? rom[addr] : 16'hZZZZ;
+   assign data = (oe_n == 1'b0) ? rom[addr] : 8'hZZZZ;
    
    initial $readmemh("rom.txt", rom);
 endmodule
