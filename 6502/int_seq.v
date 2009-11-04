@@ -24,10 +24,8 @@ module int_seq(
     output nmi,
     output irq);
 
-   wire [2:0] ints;
    reg 	      rst_latch;
    
-   assign ints = {rst_latch, nmi_n, irq_n};
    assign {rst, nmi, irq} = (rst_latch == 1'b1 ? 3'b100 :
 			     (nmi_n == 1'b0 ? 3'b010 :
 			      (irq_n == 1'b0 ? 3'b001 : 3'b000)));
