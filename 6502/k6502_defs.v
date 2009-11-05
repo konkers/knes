@@ -50,9 +50,33 @@
 `define   D_RY            3'h3
 `define   D_FF            3'h4
 `define   D_FI            3'h5
+`define   D_AL            3'h6
 
 `define X_RW		16
 `define   R               1'b0
 `define   W               1'b1
 
-`define X_BITS		17
+`define X_ALU_OP	20:17
+`define   OP_XXX	  4'h0
+`define   OP_ADD	  4'h0
+`define   OP_AND          4'h1
+`define   OP_ASL          4'h2
+`define   OP_CMP          4'h3
+`define   OP_DEC          4'h4
+`define   OP_EOR          4'h5
+`define   OP_INC          4'h6
+`define   OP_LSR          4'h7
+`define   OP_OR           4'h8
+`define   OP_ROL          4'h9
+`define   OP_ROR          4'hA
+`define   OP_SUB          4'hB
+
+`define X_ALU_INPUT	22:21
+`define A_N		  2'b00
+`define A_A		  2'b01
+`define A_X		  2'b10
+`define A_Y		  2'b11
+
+`define X_BITS		23
+
+

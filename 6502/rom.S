@@ -16,50 +16,11 @@ PPUADDR = $2006
 PPUDATA = $2007
 
 reset:
-	nop
-	lda data
 	ldx #$CA
-	ldy #$FE
+loop:	
+	inx
 	stx $DEAD
-	sty $BEAF
-count:
-	ldx #$00
-	stx $DEAD
-	ldx #$01
-	stx $DEAD
-	ldx #$02
-	stx $DEAD
-	ldx #$03
-	stx $DEAD
-	ldx #$04
-	stx $DEAD
-	ldx #$05
-	stx $DEAD
-	ldx #$06
-	stx $DEAD
-	ldx #$07
-	stx $DEAD
-	ldx #$08
-	stx $DEAD
-	ldx #$09
-	stx $DEAD
-	ldx #$0A
-	stx $DEAD
-	ldx #$0B
-	stx $DEAD
-	ldx #$0C
-	stx $DEAD
-	ldx #$0D
-	stx $DEAD
-	ldx #$0E
-	stx $DEAD
-	ldx #$0F
-	stx $DEAD
-	jmp (addr)
-data:
-	.byte $5A
-addr:
-	.word count
+	jmp loop
 
 irq:
 	rti
