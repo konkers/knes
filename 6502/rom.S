@@ -16,6 +16,12 @@ PPUADDR = $2006
 PPUDATA = $2007
 
 reset:
+	sec
+	sed
+	sei
+	clc
+	cld
+	cli
 	ldx #$CA
 loop:	
 	inx

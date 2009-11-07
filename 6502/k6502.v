@@ -110,7 +110,18 @@ module k6502(
 	       .latch(ry_latch),
 	       .rst_n(rst_n));
    
-   
+   wire [7:0] 	  sr;
+   wire [7:0] 	  sr_update_mask;
+   wire [1:0] 	  sr_update_sel;
+   wire [7:0] 	  alu_sr;
+      
+   sr sr_reg(.clk(clk),
+	     .rst_n(rst_n),
+	     .sr(sr),
+	     .update_mask(sr_update_mask),
+	     .update_sel(sr_update_sel),
+	     .alu_data(alu_sr));
+      
 `ifndef DEBUG
    wire [`X_BITS-1:0] x;
    wire [7:0] ir;
@@ -145,7 +156,16 @@ module k6502(
    assign rw_in      = x[`X_RW];
    assign alu_op     = x[`X_ALU_OP];
    assign alu_input  = x[`X_ALU_INPUT];
-
+   assign sr_update_sel = x[`X_SR_SEL];
+   assign sr_update_mask = {x[`X_UPDATE_N],
+			    x[`X_UPDATE_V],
+			    1'b0,
+			    x[`X_UPDATE_B],
+			    x[`X_UPDATE_D],
+			    x[`X_UPDATE_I],
+			    x[`X_UPDATE_Z],
+			    x[`X_UPDATE_C]};
+   			  
    wire       rst;
    wire       nmi;
    wire       irq;

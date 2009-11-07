@@ -77,6 +77,27 @@
 `define A_X		  2'b10
 `define A_Y		  2'b11
 
-`define X_BITS		23
+`define X_SR_SEL	24:23
+`define   SR_0		  2'b00
+`define   SR_F		  2'b01
+`define   SR_A		  2'b10
+`define   SR_X		  2'b11
+
+`define X_UPDATE_C	25
+
+`define X_UPDATE_Z	26
+
+`define X_UPDATE_I	27
+
+`define X_UPDATE_D	28
+
+`define X_UPDATE_B	29
+
+`define X_UPDATE_V	30
+
+`define X_UPDATE_N	31
+
+
+`define X_BITS		32
 
 
