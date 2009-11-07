@@ -15,6 +15,14 @@
 //
 `define DEBUG
 
+`define SR_C		0
+`define SR_Z		1
+`define SR_I		2
+`define SR_D		3
+`define SR_B		4
+`define SR_V		6
+`define SR_N		7
+
 `define X_SYNC_NEXT	0
 
 `define X_INC_PC	1
@@ -41,9 +49,13 @@
 
 `define X_REG_W		11
 
-`define X_PC_UPDATE	12
+`define X_A_DATA_SEL	12
+`define   AD		  1'b0
+`define   AA		  1'b1
 
-`define X_DATA_SEL      15:13
+`define X_PC_UPDATE	13
+
+`define X_DATA_SEL      16:14
 `define   D_DI            3'h0
 `define   D_RA            3'h1
 `define   D_RX            3'h2
@@ -52,11 +64,11 @@
 `define   D_FI            3'h5
 `define   D_AL            3'h6
 
-`define X_RW		16
+`define X_RW		17
 `define   R               1'b0
 `define   W               1'b1
 
-`define X_ALU_OP	20:17
+`define X_ALU_OP	21:18
 `define   OP_XXX	  4'h0
 `define   OP_ADD	  4'h0
 `define   OP_AND          4'h1
@@ -72,33 +84,33 @@
 `define   OP_SUB          4'hB
 `define   OP_TST          4'hC
 
-`define X_ALU_INPUT	22:21
+`define X_ALU_INPUT	23:22
 `define A_N		  2'b00
 `define A_A		  2'b01
 `define A_X		  2'b10
 `define A_Y		  2'b11
 
-`define X_SR_SEL	24:23
+`define X_SR_SEL	25:24
 `define   SR_0		  2'b00
 `define   SR_F		  2'b01
 `define   SR_A		  2'b10
 `define   SR_X		  2'b11
 
-`define X_UPDATE_C	25
+`define X_UPDATE_C	26
 
-`define X_UPDATE_Z	26
+`define X_UPDATE_Z	27
 
-`define X_UPDATE_I	27
+`define X_UPDATE_I	28
 
-`define X_UPDATE_D	28
+`define X_UPDATE_D	29
 
-`define X_UPDATE_B	29
+`define X_UPDATE_B	30
 
-`define X_UPDATE_V	30
+`define X_UPDATE_V	31
 
-`define X_UPDATE_N	31
+`define X_UPDATE_N	32
 
 
-`define X_BITS		32
+`define X_BITS		33
 
 

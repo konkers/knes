@@ -32,9 +32,10 @@ module alu(
     input [7:0]  arg3);
 
 
-   reg 	[1:0]	 sel_l;
-   reg 	[3:0]	 op_l;
-
+   reg [1:0] 	 sel_l;
+   reg [3:0] 	 op_l;
+   reg [7:0] 	 op_sr;
+      
    wire       n;
    wire       v;
    wire       z;
@@ -44,18 +45,24 @@ module alu(
    always @(negedge clk) begin
       sel_l <= arg_sel;
       op_l <= op;
+      op_sr <= sr;
    end
    
    wire [7:0] arg = (sel_l == 2'b00 ? arg0 :
 		     (sel_l == 2'b01 ? arg1 :
 		      (sel_l == 2'b10 ? arg2 : arg3)));
 
-
+   wire [8:0] add_out;
+   wire       add_v;
+   assign add_out = arg + data_in + op_sr[`SR_C];
+   assign add_v = add_out[7] ^ arg[7];
+      
    wire [7:0] inc_out;
    assign inc_out = arg + 1;
 
-   assign {v, c, data_out} = (op_l == `OP_INC ? {2'b0, inc_out} : 
-			      (op_l == `OP_TST ? {2'b0, data_in} : 10'h0FF));
+   assign {v, c, data_out} = (op_l == `OP_ADD ? {add_v, add_out} :
+			      (op_l == `OP_INC ? {2'b0, inc_out} : 
+			       (op_l == `OP_TST ? {2'b0, data_in} : 10'h0FF)));
    
    assign n = data_out[7];
    assign z = ~(data_out[7] | data_out[6] |

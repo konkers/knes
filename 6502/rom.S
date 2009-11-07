@@ -17,9 +17,11 @@ PPUDATA = $2007
 
 reset:
 	lda data0
-	lda data1
-	lda data2
+        adc #$01
+        adc #$01
+        adc #$01
 	ldx #$FE
+
 loop:	
 	inx
 	jmp loop

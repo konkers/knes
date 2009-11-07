@@ -77,15 +77,21 @@ module k6502(
 	   .clk(clk),
 	   .rst_n(rst_n));
 
+   wire [7:0] 	  alu_sr;
+   wire [7:0] 	  alu_data;
+
    wire [1:0] 	  reg_sel;
    wire 	  reg_w;
    
    wire 	  ra_latch;
    wire [7:0] 	  ra_data;
-
+   wire  	  ra_data_sel;
+   wire [7:0] 	  ra_data_in;
+   
    assign ra_latch = (reg_sel == `R_A) && reg_w;
-
-   register ra(.data_in(data),
+   assign ra_data_in = ra_data_sel == 1'b0 ? data : alu_data;
+   
+   register ra(.data_in(ra_data_in),
 	       .data_out(ra_data),
 	       .latch(ra_latch),
 	       .clk(clk),
@@ -118,7 +124,7 @@ module k6502(
    wire [7:0] 	  sr;
    wire [7:0] 	  sr_update_mask;
    wire [1:0] 	  sr_update_sel;
-   wire [7:0] 	  alu_sr;
+   
       
    sr sr_reg(.clk(clk),
 	     .rst_n(rst_n),
@@ -155,8 +161,8 @@ module k6502(
 
    assign reg_sel    = x[`X_REG_SEL];
    assign reg_w      = x[`X_REG_W];
+   assign ra_data_sel= x[`X_A_DATA_SEL];
    assign pc_update  = x[`X_PC_UPDATE];
-   assign data_sel   = x[`X_DATA_SEL];
    assign data_sel   = x[`X_DATA_SEL];
    assign rw_in      = x[`X_RW];
    assign alu_op     = x[`X_ALU_OP];
@@ -190,7 +196,9 @@ module k6502(
 		     .rst_n(rst_n),
 		     .clk(clk));
 
+   
    mcode mcode(.ir(ir),
+	       .sr(sr),
 	       .cycle(cycle),
 	       .rst(rst),
 	       .nmi(nmi),
@@ -202,8 +210,6 @@ module k6502(
 	     .sync(sync),
 	     .rst_n(rst_n));
 
-   wire [7:0] alu_data;
-   
    alu alu(.clk(clk),
 	   .data_in(data),
 	   .data_out(alu_data),
