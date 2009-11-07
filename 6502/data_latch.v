@@ -14,6 +14,8 @@
 // limitations under the License.
 //
 
+`timescale 1ns/1ps
+
 module data_latch(
     input [7:0]       data_in,
     output reg [15:0] data_out,

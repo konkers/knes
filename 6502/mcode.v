@@ -14,6 +14,8 @@
 // limitations under the License.
 //
 
+`timescale 1ns/1ps
+
 `include "k6502_defs.v"
 
 `define O	1'b0

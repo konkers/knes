@@ -14,6 +14,8 @@
 // limitations under the License.
 //
 
+`timescale 1ns/1ps
+
 module addr_latch(
     output [15:0] a,
     input 	      clk,

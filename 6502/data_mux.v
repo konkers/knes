@@ -14,6 +14,8 @@
 // limitations under the License.
 //
 
+`timescale 1ns/1ps
+
 module data_mux(
     output [7:0] data,
     input 	 clk,

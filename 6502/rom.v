@@ -14,6 +14,8 @@
 // limitations under the License.
 //
 
+`timescale 1ns/1ps
+
 module rom (
     input [15:0] addr,
     inout [7:0]  data,

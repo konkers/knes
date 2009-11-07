@@ -14,6 +14,8 @@
 // limitations under the License.
 //
 
+`timescale 1ns/1ps
+
 module pc (
     output reg [7:0] addr,
     input 	     carry_in,

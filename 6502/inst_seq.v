@@ -14,6 +14,8 @@
 // limitations under the License.
 //
 
+`timescale 1ns/1ps
+
 module inst_seq(
     output reg [5:0] cycle,
     output reg 	     sync,

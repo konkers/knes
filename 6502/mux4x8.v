@@ -14,6 +14,8 @@
 // limitations under the License.
 //
 
+`timescale 1ns/1ps
+
 module mux4x8(
     output reg [7:0] out,
     input [1:0]      sel,

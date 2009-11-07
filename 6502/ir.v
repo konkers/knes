@@ -14,6 +14,8 @@
 // limitations under the License.
 //
 
+`timescale 1ns/1ps
+
 module ir(
     output reg [7:0] ir,
     input [7:0]      data,

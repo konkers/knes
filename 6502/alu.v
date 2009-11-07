@@ -14,6 +14,8 @@
 // limitations under the License.
 //
 
+`timescale 1ns/1ps
+
 `include "k6502_defs.v"
 
 module alu(
