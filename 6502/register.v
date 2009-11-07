@@ -18,12 +18,19 @@ module register(
     input [7:0]       data_in,
     output reg [7:0]  data_out,
     input 	      latch,
+    input 	      clk,
     input 	      rst_n);
 
+   reg [7:0] 	      pre_data;
+   
+   always @(negedge clk) begin
+      data_out <= pre_data;
+   end
+   
    always @(posedge latch or negedge rst_n) begin
      if (rst_n == 0)
-       data_out <= 8'h00;
+       pre_data <= 8'h00;
      else
-       data_out <= data_in;
+       pre_data <= data_in;
    end
 endmodule

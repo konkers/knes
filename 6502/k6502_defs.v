@@ -70,6 +70,7 @@
 `define   OP_ROL          4'h9
 `define   OP_ROR          4'hA
 `define   OP_SUB          4'hB
+`define   OP_TST          4'hC
 
 `define X_ALU_INPUT	22:21
 `define A_N		  2'b00

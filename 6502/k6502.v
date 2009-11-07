@@ -86,6 +86,7 @@ module k6502(
    register ra(.data_in(data),
 	       .data_out(ra_data),
 	       .latch(ra_latch),
+	       .clk(clk),
 	       .rst_n(rst_n));
    
 
@@ -97,6 +98,7 @@ module k6502(
    register rx(.data_in(data),
 	       .data_out(rx_data),
 	       .latch(rx_latch),
+	       .clk(clk),
 	       .rst_n(rst_n));
 
    
@@ -108,6 +110,7 @@ module k6502(
    register ry(.data_in(data),
 	       .data_out(ry_data),
 	       .latch(ry_latch),
+	       .clk(clk),
 	       .rst_n(rst_n));
    
    wire [7:0] 	  sr;
@@ -202,6 +205,8 @@ module k6502(
    alu alu(.clk(clk),
 	   .data_in(data),
 	   .data_out(alu_data),
+	   .sr(sr),
+	   .sr_data(alu_sr),
 	   .op(alu_op),
 	   .arg_sel(alu_input),
 	   .arg0(8'h00),

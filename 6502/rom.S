@@ -16,18 +16,20 @@ PPUADDR = $2006
 PPUDATA = $2007
 
 reset:
-	sec
-	sed
-	sei
-	clc
-	cld
-	cli
-	ldx #$CA
+	lda data0
+	lda data1
+	lda data2
+	ldx #$FE
 loop:	
 	inx
-	stx $DEAD
 	jmp loop
 
+data0:
+	.byte $ff
+data1:
+	.byte $00
+data2:
+	.byte $01
 irq:
 	rti
 
