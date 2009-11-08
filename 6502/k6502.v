@@ -141,7 +141,7 @@ module k6502(
    wire [2:0] data_sel;
    wire       rw_in;
    wire [3:0] alu_op;
-   wire [1:0] alu_input;
+   wire [2:0] alu_input;
    
    assign next_sync =  x[`X_SYNC_NEXT] & rst_n;
    assign pc_inc =     x[`X_INC_PC] & rst_n;
@@ -197,8 +197,11 @@ module k6502(
 		     .clk(clk));
 
    
+   wire [1:0] b_sr;
+   
    mcode mcode(.ir(ir),
 	       .sr(sr),
+	       .b_sr(b_sr),
 	       .cycle(cycle),
 	       .rst(rst),
 	       .nmi(nmi),
@@ -211,16 +214,21 @@ module k6502(
 	     .rst_n(rst_n));
 
    alu alu(.clk(clk),
-	   .data_in(data),
+	   .data_in(d),
 	   .data_out(alu_data),
 	   .sr(sr),
 	   .sr_data(alu_sr),
+	   .b_sr(b_sr),
 	   .op(alu_op),
 	   .arg_sel(alu_input),
 	   .arg0(8'h00),
 	   .arg1(ra_data),
 	   .arg2(rx_data),
-	   .arg3(ry_data));
+	   .arg3(ry_data),
+	   .arg4(pc[7:0]),
+	   .arg5(pc[15:8]),
+	   .arg6(8'hFF),
+	   .arg7(8'hFF));
    
    wire [7:0] fi;
    assign fi = (rst == 1'b1 ? 8'hFC :

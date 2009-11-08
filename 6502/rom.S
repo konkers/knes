@@ -15,15 +15,22 @@ PPUSCROLL = $2005
 PPUADDR = $2006
 PPUDATA = $2007
 
+	.repeat	$f8, I
+	.byte I
+	.endrep
 reset:
-	lda data0
-        adc #$01
+	ldx #$FE
+	lda data1
+	beq loop
+back:	
+	adc #$01
         adc #$01
         adc #$01
 	ldx #$FE
 
 loop:	
 	inx
+	beq back
 	jmp loop
 
 data0:

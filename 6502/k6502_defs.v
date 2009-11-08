@@ -83,34 +83,37 @@
 `define   OP_ROR          4'hA
 `define   OP_SUB          4'hB
 `define   OP_TST          4'hC
+`define   OP_BAD          4'hD
 
-`define X_ALU_INPUT	23:22
-`define A_N		  2'b00
-`define A_A		  2'b01
-`define A_X		  2'b10
-`define A_Y		  2'b11
+`define X_ALU_INPUT	24:22
+`define A_N		  3'b000
+`define A_A		  3'b001
+`define A_X		  3'b010
+`define A_Y		  3'b011
+`define A_L		  3'b100
+`define A_H		  3'b101
 
-`define X_SR_SEL	25:24
+`define X_SR_SEL	26:25
 `define   SR_0		  2'b00
 `define   SR_F		  2'b01
 `define   SR_A		  2'b10
 `define   SR_X		  2'b11
 
-`define X_UPDATE_C	26
+`define X_UPDATE_C	27
 
-`define X_UPDATE_Z	27
+`define X_UPDATE_Z	28
 
-`define X_UPDATE_I	28
+`define X_UPDATE_I	29
 
-`define X_UPDATE_D	29
+`define X_UPDATE_D	30
 
-`define X_UPDATE_B	30
+`define X_UPDATE_B	31
 
-`define X_UPDATE_V	31
+`define X_UPDATE_V	32
 
-`define X_UPDATE_N	32
+`define X_UPDATE_N	33
 
 
-`define X_BITS		33
+`define X_BITS		34
 
 
