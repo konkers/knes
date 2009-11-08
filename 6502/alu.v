@@ -72,19 +72,64 @@ module alu(
    assign add_c = op_l == `OP_BAD ? 1'b1 : op_sr[`SR_C];
 
    assign add_out = arg + data_in + add_c;
-   assign add_v = add_out[7] ^ arg[7];
-      
-   wire [7:0] inc_out;
-   assign inc_out = arg + 1;
+   assign add_v = data_in[7] == 0 ? ~arg[7] & add_out[7] :
+		  arg[7] & ~add_out[7];
 
+   
+   wire [7:0] and_out;
+   assign and_out = arg & data_in;
+
+   wire [8:0] asl_out;
+   assign asl_out = {arg, 1'b0};
+      
+   wire [8:0] cmp_out;
+   assign cmp_out = arg - data_in;
+      
    wire [7:0] dec_out;
    assign dec_out = arg - 1;
 
+   wire [7:0] eor_out;
+   assign eor_out = arg ^ data_in;
+
+   wire [7:0] inc_out;
+   assign inc_out = arg + 1;
+
+   wire [8:0] lsr_out;
+   assign lsr_out = {arg[0], 1'b0, arg[7:1]};
+
+   wire [7:0] or_out;
+   assign or_out = arg | data_in;
+   
+   wire [8:0] rol_out;
+   assign rol_out = {arg[7:0], op_sr[`SR_C]};
+
+   wire [8:0] ror_out;
+   assign ror_out = {arg[0], op_sr[`SR_C], arg[7:1]};
+
+   wire [8:0] sub_out;
+   wire       sub_v;
+   wire       sub_c;
+   assign sub_c = ~op_sr[`SR_C];
+
+   assign sub_out = (arg - data_in) - sub_c ;
+   assign sub_v = data_in[7] == 1 ? ~arg[7] & sub_out[7] :
+		  arg[7] & ~sub_out[7];
+   
    assign {v, c, data_out} = (op_l == `OP_ADD ? {add_v, add_out} :
-			      (op_l == `OP_DEC ? {2'b0, dec_out} : 
-			       (op_l == `OP_INC ? {2'b0, inc_out} : 
-				(op_l == `OP_TST ? {2'b0, data_in} :
-				 (op_l == `OP_BAD ? {add_v, add_out} : 10'h0FF)))));
+			      (op_l == `OP_AND ? {2'b0, and_out} : 
+			       (op_l == `OP_ASL ? {1'b0, asl_out} : 
+				(op_l == `OP_CMP ? {1'b0, cmp_out} : 
+				 (op_l == `OP_DEC ? {2'b0, dec_out} : 
+				  (op_l == `OP_EOR ? {2'b0, eor_out} : 
+				   (op_l == `OP_INC ? {2'b0, inc_out} : 
+				    (op_l == `OP_LSR ? {1'b0, lsr_out} : 
+				     (op_l == `OP_OR  ? {2'b0, or_out } : 
+				      (op_l == `OP_ROL ? {1'b0, rol_out} : 
+				       (op_l == `OP_ROR ? {1'b0, ror_out} : 
+					(op_l == `OP_SUB ? {sub_v, sub_out} :
+					 (op_l == `OP_TST ? {2'b0, data_in} :
+					  (op_l == `OP_BAD ? {add_v, add_out} : 
+					   10'h0FF))))))))))))));
    
    assign n = data_out[7];
    assign z = ~(data_out[7] | data_out[6] |

@@ -63,7 +63,7 @@ module k6502_test;
 	#500 rst_n = 1;
      end
 
-   initial #10000 $stop;
+   initial #20000 $stop;
    initial begin
       $dumpfile("k6502_test.vcd");
       $dumpvars(0,k6502_test);
