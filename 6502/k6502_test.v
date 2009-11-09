@@ -51,7 +51,7 @@ module k6502_test;
 
    rom rom(.addr({1'b0, a[14:0]}),
 	   .data(d),
-	   .oe_n(rw & a[15]));
+	   .oe_n(rw | ~a[15]));
       
    initial // Clock generator
      begin
@@ -66,6 +66,8 @@ module k6502_test;
      end
 
    always @(posedge clk) begin
+      if (rw == 1'b1) 
+	$display("write %h=%h", a, d);
       if ((rw == 1'b1) && (a == 16'hDEAD))
 	$stop;
    end

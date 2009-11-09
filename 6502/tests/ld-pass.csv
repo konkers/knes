@@ -29,4 +29,12 @@ clk_counter, pc, ir, sr, ra_data, rx_data, ry_data
         84, 8042, ac, 34, ff, ff, 5a
         88, 8045, ac, b4, ff, ff, 80
         92, 8048, ac, b4, ff, ff, a5
-        96, 804b, 8e, b4, ff, ff, ff
+        96, 804b, a9, b4, ff, ff, ff
+        98, 804d, a2, b4, a5, ff, ff
+       100, 804f, a0, 34, a5, 5a, ff
+       102, 8051, 8d, b4, a5, 5a, ff
+write 2000=a5
+       106, 8054, 8e, b4, a5, 5a, ff
+write 2001=5a
+       110, 8057, 8c, b4, a5, 5a, ff
+write dead=ff

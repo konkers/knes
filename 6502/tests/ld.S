@@ -52,7 +52,14 @@ reset:
 	ldy data3
 	ldy data4
 
-	stx $DEAD
+	lda #$A5
+	ldx #$5A
+	ldy #$FF
+
+	sta $2000
+	stx $2001
+	
+	sty $DEAD
 loop:	
 	jmp loop
 

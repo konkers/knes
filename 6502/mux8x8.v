@@ -16,39 +16,31 @@
 
 `timescale 1ns/1ps
 
-module data_mux(
-    output [7:0] data,
-    input 	 clk,
-    output reg 	 rw,
-    input 	 rw_in,
-    input [2:0]  data_sel,
-    input [7:0]  data0,
-    input [7:0]  data1,
-    input [7:0]  data2,
-    input [7:0]  data3,
-    input [7:0]  data4,
-    input [7:0]  data5,
-    input [7:0]  data6,
-    input [7:0]  data7);
+module mux8x8(
+    output reg [7:0] out,
+    input [2:0]      sel,
+    input [7:0]      in0,
+    input [7:0]      in1,
+    input [7:0]      in2,
+    input [7:0]      in3,
+    input [7:0]      in4,
+    input [7:0]      in5,
+    input [7:0]      in6,
+    input [7:0]      in7);
 
-   reg [2:0] 	 sel;
-
-   mux8x8 mux(.out(data),
-	      .sel(sel),
-	      .in0(data0),
-	      .in1(data1),
-	      .in2(data2),
-	      .in3(data3),
-	      .in4(data4),
-	      .in5(data5),
-	      .in6(data6),
-	      .in7(data7));
-   
-   always @(negedge clk) begin
-      sel <= data_sel;
-      rw <= rw_in;
+   always @(sel or in0 or in1 or in2 or in3 or in4 or in5 or in6 or in7) begin
+      case (sel)
+	3'b000: out <= in0;
+	3'b001: out <= in1;
+	3'b010: out <= in2;
+	3'b011: out <= in3;
+	3'b100: out <= in4;
+	3'b101: out <= in5;
+	3'b110: out <= in6;
+	3'b111: out <= in7;
+      endcase
    end
-
    
 endmodule
-		   
+
+	      

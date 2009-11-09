@@ -142,3 +142,4 @@ clk_counter, pc, ir, sr, ra_data, rx_data, ry_data
        286, 80db, 6a, 34, 02, 01, 01
        288, 80dc, 6a, 34, 01, 01, 01
        290, 80dd, 8e, 37, 00, 01, 01
+write dead=01

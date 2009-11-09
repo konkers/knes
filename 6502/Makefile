@@ -14,6 +14,7 @@ all: k6502_test.vcd
 ASM_TESTS=${wildcard tests/*.S}
 TXT_TESTS=${ASM_TESTS:.S=.txt}
 TESTS=${ASM_TESTS:.S=}
+TEST_OUTS=${ASM_TESTS:.S=-out.csv}
 
 tests: ${TXT_TESTS}
 	${IVERILOG} -DTRACE -Wall -y. -o k6502_test k6502_test.v
@@ -28,10 +29,12 @@ tests: ${TXT_TESTS}
 			echo "$$test: fail"; \
 		fi \
 	done
+	@cat ${TEST_OUTS} | ./test_matrix.pl
 
 dumper: dumper.o
 
 %_test: %_test.v
+	${IVERILOG} -Wall -y. -o $@ $<
 
 %.vcd: %
 	${VVP} -n ./$<
