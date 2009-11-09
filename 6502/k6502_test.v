@@ -31,6 +31,7 @@ module k6502_test;
    wire [15:0] 	      pc;
    wire [15:0]      dl;
    wire [7:0]      ir;
+   wire 	   ex;
 `endif
 
    k6502 k6502(
@@ -39,6 +40,7 @@ module k6502_test;
 	       .pc(pc),
 	       .dl(dl),
 	       .ir(ir),
+	       .ex(ex),
 `endif
 	       .a(a),
 	       .d(d),
@@ -63,7 +65,16 @@ module k6502_test;
 	#500 rst_n = 1;
      end
 
-   initial #20000 $stop;
+   always @(posedge clk) begin
+      if ((rw == 1'b1) && (a == 16'hDEAD))
+	$stop;
+   end
+
+   always @(negedge clk) begin
+      if ((rst_n == 1) && (ex == 1))
+	$stop;
+   end
+
    initial begin
       $dumpfile("k6502_test.vcd");
       $dumpvars(0,k6502_test);

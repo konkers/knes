@@ -16,6 +16,20 @@ PPUADDR = $2006
 PPUDATA = $2007
 
 reset:
+	ldx #$FF
+	lda #$5A
+	ldx #$00
+	tax
+
+	lda #$00
+	ldx #$FF
+	tax
+
+	lda #$80
+	ldx #$2F
+	tax
+
+	
 	CLC      ; 1 + 1 = 2, returns V = 0
 	LDA #$01
 	ADC #$01	
@@ -43,9 +57,9 @@ reset:
 	SEC      ; 127 - -1 = 128, returns V = 1
 	LDA #$7F
 	SBC #$FF
-	
+
+	stx $DEAD
 loop:	
-	inx
 	jmp loop
 
 data0:

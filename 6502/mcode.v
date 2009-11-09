@@ -71,174 +71,186 @@ module mcode(
       
    always @(mcode_state) begin
       casex (mcode_state)
-	//                                                                                                  A                     D   D   P   P
-	//                                                                    A                         P                  A      L   L   C   C           S
-	//                                 U   U   U   U   U   U   U          L                  D      C   D              D                              Y
-	//                                 P   P   P   P   P   P   P          U                  A          A        R     D      L   L   L   L           N
-	//                                 D   D   D   D   D   D   D   S            A            T      U   T        E     R      A   A   A   A   I   I   C
-	//                                 A   A   A   A   A   A   A   R      I     L            A      P   A    R   G            T   T   T   T   N   N    
-	//                                 T   T   T   T   T   T   T          N     U                   D        E         M      C   C   C   C   C   C   N
-	//                                 E   E   E   E   E   E   E   S      P                  S      A   S    G   S     O      H   H   H   H           E
-	//                                                             E      U     O        R   E      T   E        E     D                      D   P   X
-	//                                 N   V   B   D   I   Z   C   L      T     P        W   L      E   L    W   L     E      H   L   H   L   L   C   T
-	{`S_XX, `RST, 8'hxx, `C_0}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_FI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
-	{`S_XX, `RST, 8'hxx, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_FF, `O, `AD, `O, `R_N, `A_PC, `O, `X, `O, `O, `O, `O, `O};
-	{`S_XX, `RST, 8'hxx, `C_2}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_DL, `X, `O, `O, `O, `O, `O, `O};
-	{`S_XX, `RST, 8'hxx, `C_3}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_DL, `O, `O, `O, `X, `X, `O, `O};
-	{`S_XX, `RST, 8'hxx, `C_4}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `X, `AD, `O, `R_N, `A_PC, `O, `O, `X, `O, `O, `O, `X};
+	//                                                                                                        A                     D   D   P   P
+	//                                 E                                        A                         P                  A      L   L   C   C           S
+	//                                 X     U   U   U   U   U   U   U          L                  D      C   D              D                              Y
+	//                                 C     P   P   P   P   P   P   P          U                  A          A        R     D      L   L   L   L           N
+	//                                 E     D   D   D   D   D   D   D   S            A            T      U   T        E     R      A   A   A   A   I   I   C
+	//                                 P     A   A   A   A   A   A   A   R      I     L            A      P   A    R   G            T   T   T   T   N   N    
+	//                                 T     T   T   T   T   T   T   T          N     U                   D        E         M      C   C   C   C   C   C   N
+	//                                 I     E   E   E   E   E   E   E   S      P                  S      A   S    G   S     O      H   H   H   H           E
+	//                                 O                                 E      U     O        R   E      T   E        E     D                      D   P   X
+	//                                 N     N   V   B   D   I   Z   C   L      T     P        W   L      E   L    W   L     E      H   L   H   L   L   C   T
+	{`S_XX, `RST, 8'hxx, `C_0}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_FI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
+	{`S_XX, `RST, 8'hxx, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_FF, `O, `AD, `O, `R_N, `A_PC, `O, `X, `O, `O, `O, `O, `O};
+	{`S_XX, `RST, 8'hxx, `C_2}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_DL, `X, `O, `O, `O, `O, `O, `O};
+	{`S_XX, `RST, 8'hxx, `C_3}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_DL, `O, `O, `O, `X, `X, `O, `O};
+	{`S_XX, `RST, 8'hxx, `C_4}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `X, `AD, `O, `R_N, `A_PC, `O, `O, `X, `O, `O, `O, `X};
 	
     	// reset
-	{`S_XX, `NON, 8'h00, `C_N}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `X};
+	{`S_XX, `NON, 8'h00, `C_N}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `X};
 	// ADC imm
-	{`S_XX, `NON, 8'h69, `C_0}: x <= {`X, `X, `O, `O, `O, `X, `X, `SR_A, `A_A, `OP_ADD, `R, `D_DI, `O, `AA, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
-	{`S_XX, `NON, 8'h69, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AA, `X, `R_A, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	{`S_XX, `NON, 8'h69, `C_0}: x <= {`E_0, `X, `X, `O, `O, `O, `X, `X, `SR_A, `A_A, `OP_ADD, `R, `D_DI, `O, `AA, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'h69, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AA, `X, `R_A, `A_PC, `O, `O, `O, `O, `O, `X, `X};
 	// AND imm
-	{`S_XX, `NON, 8'h29, `C_0}: x <= {`X, `O, `O, `O, `O, `X, `O, `SR_A, `A_A, `OP_AND, `R, `D_DI, `O, `AA, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
-	{`S_XX, `NON, 8'h29, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AA, `X, `R_A, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	{`S_XX, `NON, 8'h29, `C_0}: x <= {`E_0, `X, `O, `O, `O, `O, `X, `O, `SR_A, `A_A, `OP_AND, `R, `D_DI, `O, `AA, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'h29, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AA, `X, `R_A, `A_PC, `O, `O, `O, `O, `O, `X, `X};
 	// ASL A
-	{`S_XX, `NON, 8'h0A, `C_0}: x <= {`X, `O, `O, `O, `O, `X, `X, `SR_A, `A_A, `OP_ASL, `R, `D_DI, `O, `AA, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
-	{`S_XX, `NON, 8'h0A, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AA, `X, `R_A, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	{`S_XX, `NON, 8'h0A, `C_0}: x <= {`E_0, `X, `O, `O, `O, `O, `X, `X, `SR_A, `A_A, `OP_ASL, `R, `D_DI, `O, `AA, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
+	{`S_XX, `NON, 8'h0A, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AA, `X, `R_A, `A_PC, `O, `O, `O, `O, `O, `X, `X};
 
 	// BRANCHES - 
-	{`S_XX, `NON, `BRXX, `C_0}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_L, `OP_BAD, `R, `D_AL, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, `BRXX, `C_0}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_L, `OP_BAD, `R, `D_AL, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
 
 	// BCC C == 0
-	{`S_C1, `NON, 8'h90, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
-	{`S_C0, `NON, 8'h90, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `X, `O, `X, `O};
+	{`S_C1, `NON, 8'h90, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	{`S_C0, `NON, 8'h90, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `X, `O, `X, `O};
 	// BCS C == 1
-	{`S_C0, `NON, 8'hB0, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
-	{`S_C1, `NON, 8'hB0, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `X, `O, `X, `O};
+	{`S_C0, `NON, 8'hB0, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	{`S_C1, `NON, 8'hB0, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `X, `O, `X, `O};
 	// BEQ Z == 1
-	{`S_Z0, `NON, 8'hF0, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
-	{`S_Z1, `NON, 8'hF0, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `X, `O, `X, `O};
+	{`S_Z0, `NON, 8'hF0, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	{`S_Z1, `NON, 8'hF0, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `X, `O, `X, `O};
 	// BMI N == 1
-	{`S_N0, `NON, 8'h30, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
-	{`S_N1, `NON, 8'h30, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `X, `O, `X, `O};
+	{`S_N0, `NON, 8'h30, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	{`S_N1, `NON, 8'h30, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `X, `O, `X, `O};
 	// BNE Z == 0
-	{`S_Z1, `NON, 8'hD0, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
-	{`S_Z0, `NON, 8'hD0, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `X, `O, `X, `O};
+	{`S_Z1, `NON, 8'hD0, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	{`S_Z0, `NON, 8'hD0, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `X, `O, `X, `O};
 	// BPL N == 0
-	{`S_N1, `NON, 8'h10, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
-	{`S_N0, `NON, 8'h10, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `X, `O, `X, `O};
+	{`S_N1, `NON, 8'h10, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	{`S_N0, `NON, 8'h10, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `X, `O, `X, `O};
 	// BVC V == 0
-	{`S_V1, `NON, 8'h50, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
-	{`S_V0, `NON, 8'h50, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `X, `O, `X, `O};
+	{`S_V1, `NON, 8'h50, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	{`S_V0, `NON, 8'h50, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `X, `O, `X, `O};
 	// BVS V == 1
-	{`S_V0, `NON, 8'h70, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
-	{`S_V1, `NON, 8'h70, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `X, `O, `X, `O};
+	{`S_V0, `NON, 8'h70, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	{`S_V1, `NON, 8'h70, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `X, `O, `X, `O};
 
-	{`S_BS, `NON, `BRXX, `C_2}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `X, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `X};
-	{`S_BN, `NON, `BRXX, `C_2}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_H, `OP_INC, `R, `D_AL, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
-	{`S_BP, `NON, `BRXX, `C_2}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_H, `OP_DEC, `R, `D_AL, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
+	{`S_BS, `NON, `BRXX, `C_2}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `X, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `X};
+	{`S_BN, `NON, `BRXX, `C_2}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_H, `OP_INC, `R, `D_AL, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
+	{`S_BP, `NON, `BRXX, `C_2}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_H, `OP_DEC, `R, `D_AL, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
 
-	{`S_XX, `NON, `BRXX, `C_3}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `X, `AD, `O, `R_N, `A_PC, `O, `O, `X, `O, `O, `O, `X};
+	{`S_XX, `NON, `BRXX, `C_3}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `X, `AD, `O, `R_N, `A_PC, `O, `O, `X, `O, `O, `O, `X};
 
 	
 	// CLC
-	{`S_XX, `NON, 8'h18, `C_0}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
-	{`S_XX, `NON, 8'h18, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `X, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	{`S_XX, `NON, 8'h18, `C_0}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
+	{`S_XX, `NON, 8'h18, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `X, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
 	// CLD
-	{`S_XX, `NON, 8'hD8, `C_0}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
-	{`S_XX, `NON, 8'hD8, `C_1}: x <= {`O, `O, `O, `X, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	{`S_XX, `NON, 8'hD8, `C_0}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
+	{`S_XX, `NON, 8'hD8, `C_1}: x <= {`E_0, `O, `O, `O, `X, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
 	// CLI
-	{`S_XX, `NON, 8'h58, `C_0}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
-	{`S_XX, `NON, 8'h58, `C_1}: x <= {`O, `O, `O, `O, `X, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	{`S_XX, `NON, 8'h58, `C_0}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
+	{`S_XX, `NON, 8'h58, `C_1}: x <= {`E_0, `O, `O, `O, `O, `X, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
 	// CLV
-	{`S_XX, `NON, 8'hD8, `C_0}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
-	{`S_XX, `NON, 8'hD8, `C_1}: x <= {`O, `X, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	{`S_XX, `NON, 8'hB8, `C_0}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
+	{`S_XX, `NON, 8'hB8, `C_1}: x <= {`E_0, `O, `X, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
 	// CMP imm
-	{`S_XX, `NON, 8'hC9, `C_0}: x <= {`X, `O, `O, `O, `O, `X, `X, `SR_A, `A_A, `OP_CMP, `R, `D_DI, `O, `AA, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
-	{`S_XX, `NON, 8'hC9, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AA, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	{`S_XX, `NON, 8'hC9, `C_0}: x <= {`E_0, `X, `O, `O, `O, `O, `X, `X, `SR_A, `A_A, `OP_CMP, `R, `D_DI, `O, `AA, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'hC9, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AA, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	// CPX imm
+	{`S_XX, `NON, 8'hE0, `C_0}: x <= {`E_0, `X, `O, `O, `O, `O, `X, `X, `SR_A, `A_X, `OP_CMP, `R, `D_DI, `O, `AA, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'hE0, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AA, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	// CPY imm
+	{`S_XX, `NON, 8'hC0, `C_0}: x <= {`E_0, `X, `O, `O, `O, `O, `X, `X, `SR_A, `A_Y, `OP_CMP, `R, `D_DI, `O, `AA, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'hC0, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AA, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
 	// DEX
-	{`S_XX, `NON, 8'hCA, `C_0}: x <= {`X, `O, `O, `O, `O, `X, `O, `SR_A, `A_X, `OP_DEC, `R, `D_AL, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
-	{`S_XX, `NON, 8'hCA, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `X, `R_X, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	{`S_XX, `NON, 8'hCA, `C_0}: x <= {`E_0, `X, `O, `O, `O, `O, `X, `O, `SR_A, `A_X, `OP_DEC, `R, `D_AL, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
+	{`S_XX, `NON, 8'hCA, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `X, `R_X, `A_PC, `O, `O, `O, `O, `O, `X, `X};
 	// DEY
-	{`S_XX, `NON, 8'h88, `C_0}: x <= {`X, `O, `O, `O, `O, `X, `O, `SR_A, `A_Y, `OP_DEC, `R, `D_AL, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
-	{`S_XX, `NON, 8'h88, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `X, `R_Y, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	{`S_XX, `NON, 8'h88, `C_0}: x <= {`E_0, `X, `O, `O, `O, `O, `X, `O, `SR_A, `A_Y, `OP_DEC, `R, `D_AL, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
+	{`S_XX, `NON, 8'h88, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `X, `R_Y, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	// EOR imm
+	{`S_XX, `NON, 8'h49, `C_0}: x <= {`E_0, `X, `O, `O, `O, `O, `X, `O, `SR_A, `A_A, `OP_EOR, `R, `D_DI, `O, `AA, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'h49, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AA, `X, `R_A, `A_PC, `O, `O, `O, `O, `O, `X, `X};
 	// INX
-	{`S_XX, `NON, 8'hE8, `C_0}: x <= {`X, `O, `O, `O, `O, `X, `O, `SR_A, `A_X, `OP_INC, `R, `D_AL, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
-	{`S_XX, `NON, 8'hE8, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `X, `R_X, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	{`S_XX, `NON, 8'hE8, `C_0}: x <= {`E_0, `X, `O, `O, `O, `O, `X, `O, `SR_A, `A_X, `OP_INC, `R, `D_AL, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
+	{`S_XX, `NON, 8'hE8, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `X, `R_X, `A_PC, `O, `O, `O, `O, `O, `X, `X};
 	// INY
-	{`S_XX, `NON, 8'hC8, `C_0}: x <= {`X, `O, `O, `O, `O, `X, `O, `SR_A, `A_Y, `OP_INC, `R, `D_AL, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
-	{`S_XX, `NON, 8'hC8, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `X, `R_Y, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	{`S_XX, `NON, 8'hC8, `C_0}: x <= {`E_0, `X, `O, `O, `O, `O, `X, `O, `SR_A, `A_Y, `OP_INC, `R, `D_AL, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
+	{`S_XX, `NON, 8'hC8, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `X, `R_Y, `A_PC, `O, `O, `O, `O, `O, `X, `X};
 	// JMP imm
-	{`S_XX, `NON, 8'h4C, `C_0}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
-    	{`S_XX, `NON, 8'h4C, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `X, `O, `X, `O};
-	{`S_XX, `NON, 8'h4C, `C_2}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `X, `AD, `O, `R_N, `A_PC, `O, `O, `X, `O, `O, `X, `X};
+	{`S_XX, `NON, 8'h4C, `C_0}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+    	{`S_XX, `NON, 8'h4C, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `X, `O, `X, `O};
+	{`S_XX, `NON, 8'h4C, `C_2}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `X, `AD, `O, `R_N, `A_PC, `O, `O, `X, `O, `O, `X, `X};
 	// JMP ind
-	{`S_XX, `NON, 8'h6C, `C_0}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
-	{`S_XX, `NON, 8'h6C, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `X, `O, `O, `O, `X, `O};
-	{`S_XX, `NON, 8'h6C, `C_2}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_DL, `X, `O, `O, `O, `O, `X, `O};
-	{`S_XX, `NON, 8'h6C, `C_3}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_DL, `O, `O, `O, `X, `X, `O, `O};
-	{`S_XX, `NON, 8'h6C, `C_4}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `X, `AD, `O, `R_N, `A_PC, `O, `O, `X, `O, `O, `O, `X};
+	{`S_XX, `NON, 8'h6C, `C_0}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'h6C, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `X, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'h6C, `C_2}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_DL, `X, `O, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'h6C, `C_3}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_DL, `O, `O, `O, `X, `X, `O, `O};
+	{`S_XX, `NON, 8'h6C, `C_4}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `X, `AD, `O, `R_N, `A_PC, `O, `O, `X, `O, `O, `O, `X};
 	// LDA imm
-	{`S_XX, `NON, 8'hA9, `C_0}: x <= {`X, `O, `O, `O, `O, `X, `O, `SR_A, `A_N, `OP_TST, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
-	{`S_XX, `NON, 8'hA9, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `X, `R_A, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	{`S_XX, `NON, 8'hA9, `C_0}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'hA9, `C_1}: x <= {`E_0, `X, `O, `O, `O, `O, `X, `O, `SR_A, `A_A, `OP_TST, `R, `D_DI, `O, `AD, `X, `R_A, `A_PC, `O, `O, `O, `O, `O, `X, `X};
 	// LDA abs
-	{`S_XX, `NON, 8'hAD, `C_0}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
-	{`S_XX, `NON, 8'hAD, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `X, `O, `O, `O, `X, `O};
-	{`S_XX, `NON, 8'hAD, `C_2}: x <= {`X, `O, `O, `O, `O, `X, `O, `SR_A, `A_N, `OP_TST, `R, `D_DI, `O, `AD, `O, `R_N, `A_DL, `X, `O, `O, `O, `O, `X, `O};
-	{`S_XX, `NON, 8'hAD, `C_3}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `X, `R_A, `A_PC, `O, `O, `O, `O, `O, `O, `X};
+	{`S_XX, `NON, 8'hAD, `C_0}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'hAD, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `X, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'hAD, `C_2}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_DL, `X, `O, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'hAD, `C_3}: x <= {`E_0, `X, `O, `O, `O, `O, `X, `O, `SR_A, `A_A, `OP_TST, `R, `D_DI, `O, `AD, `X, `R_A, `A_PC, `O, `O, `O, `O, `O, `O, `X};
 	// LDX imm
-	{`S_XX, `NON, 8'hA2, `C_0}: x <= {`X, `O, `O, `O, `O, `X, `O, `SR_A, `A_N, `OP_TST, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
-	{`S_XX, `NON, 8'hA2, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `X, `R_X, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	{`S_XX, `NON, 8'hA2, `C_0}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'hA2, `C_1}: x <= {`E_0, `X, `O, `O, `O, `O, `X, `O, `SR_A, `A_X, `OP_TST, `R, `D_DI, `O, `AD, `X, `R_X, `A_PC, `O, `O, `O, `O, `O, `X, `X};
 	// LDX abs
-	{`S_XX, `NON, 8'hAE, `C_0}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
-	{`S_XX, `NON, 8'hAE, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `X, `O, `O, `O, `X, `O};
-	{`S_XX, `NON, 8'hAE, `C_2}: x <= {`X, `O, `O, `O, `O, `X, `O, `SR_A, `A_N, `OP_TST, `R, `D_DI, `O, `AD, `O, `R_N, `A_DL, `X, `O, `O, `O, `O, `X, `O};
-	{`S_XX, `NON, 8'hAE, `C_3}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `X, `R_X, `A_PC, `O, `O, `O, `O, `O, `O, `X};
+	{`S_XX, `NON, 8'hAE, `C_0}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'hAE, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `X, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'hAE, `C_2}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_DL, `X, `O, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'hAE, `C_3}: x <= {`E_0, `X, `O, `O, `O, `O, `X, `O, `SR_A, `A_X, `OP_TST, `R, `D_DI, `O, `AD, `X, `R_X, `A_PC, `O, `O, `O, `O, `O, `O, `X};
 	// LDY imm
-	{`S_XX, `NON, 8'hA0, `C_0}: x <= {`X, `O, `O, `O, `O, `X, `O, `SR_A, `A_N, `OP_TST, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
-	{`S_XX, `NON, 8'hA0, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `X, `R_Y, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	{`S_XX, `NON, 8'hA0, `C_0}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'hA0, `C_1}: x <= {`E_0, `X, `O, `O, `O, `O, `X, `O, `SR_A, `A_Y, `OP_TST, `R, `D_DI, `O, `AD, `X, `R_Y, `A_PC, `O, `O, `O, `O, `O, `X, `X};
 	// LDY abs
-	{`S_XX, `NON, 8'hAC, `C_0}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
-	{`S_XX, `NON, 8'hAC, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `X, `O, `O, `O, `X, `O};
-	{`S_XX, `NON, 8'hAC, `C_2}: x <= {`X, `O, `O, `O, `O, `X, `O, `SR_A, `A_N, `OP_TST, `R, `D_DI, `O, `AD, `O, `R_N, `A_DL, `X, `O, `O, `O, `O, `X, `O};
-	{`S_XX, `NON, 8'hAC, `C_3}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `X, `R_Y, `A_PC, `O, `O, `O, `O, `O, `O, `X};
+	{`S_XX, `NON, 8'hAC, `C_0}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'hAC, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `X, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'hAC, `C_2}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_DL, `X, `O, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'hAC, `C_3}: x <= {`E_0, `X, `O, `O, `O, `O, `X, `O, `SR_A, `A_Y, `OP_TST, `R, `D_DI, `O, `AD, `X, `R_Y, `A_PC, `O, `O, `O, `O, `O, `O, `X};
 	// LSR A
-	{`S_XX, `NON, 8'h4A, `C_0}: x <= {`X, `O, `O, `O, `O, `X, `X, `SR_A, `A_A, `OP_LSR, `R, `D_DI, `O, `AA, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
-	{`S_XX, `NON, 8'h4A, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AA, `X, `R_A, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	{`S_XX, `NON, 8'h4A, `C_0}: x <= {`E_0, `X, `O, `O, `O, `O, `X, `X, `SR_A, `A_A, `OP_LSR, `R, `D_DI, `O, `AA, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
+	{`S_XX, `NON, 8'h4A, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AA, `X, `R_A, `A_PC, `O, `O, `O, `O, `O, `X, `X};
 	// NOP
-	{`S_XX, `NON, 8'hEA, `C_0}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
-	{`S_XX, `NON, 8'hEA, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	{`S_XX, `NON, 8'hEA, `C_0}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
+	{`S_XX, `NON, 8'hEA, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
 	// ORA imm
-	{`S_XX, `NON, 8'h09, `C_0}: x <= {`X, `O, `O, `O, `O, `X, `O, `SR_A, `A_A, `OP_OR , `R, `D_DI, `O, `AA, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
-	{`S_XX, `NON, 8'h09, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AA, `X, `R_A, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	{`S_XX, `NON, 8'h09, `C_0}: x <= {`E_0, `X, `O, `O, `O, `O, `X, `O, `SR_A, `A_A, `OP_OR , `R, `D_DI, `O, `AA, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'h09, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AA, `X, `R_A, `A_PC, `O, `O, `O, `O, `O, `X, `X};
 	// ROL A
-	{`S_XX, `NON, 8'h2A, `C_0}: x <= {`X, `O, `O, `O, `O, `X, `X, `SR_A, `A_A, `OP_ROL, `R, `D_DI, `O, `AA, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
-	{`S_XX, `NON, 8'h2A, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AA, `X, `R_A, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	{`S_XX, `NON, 8'h2A, `C_0}: x <= {`E_0, `X, `O, `O, `O, `O, `X, `X, `SR_A, `A_A, `OP_ROL, `R, `D_DI, `O, `AA, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
+	{`S_XX, `NON, 8'h2A, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AA, `X, `R_A, `A_PC, `O, `O, `O, `O, `O, `X, `X};
 	// ROR A
-	{`S_XX, `NON, 8'h6A, `C_0}: x <= {`X, `O, `O, `O, `O, `X, `X, `SR_A, `A_A, `OP_ROR, `R, `D_DI, `O, `AA, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
-	{`S_XX, `NON, 8'h6A, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AA, `X, `R_A, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	{`S_XX, `NON, 8'h6A, `C_0}: x <= {`E_0, `X, `O, `O, `O, `O, `X, `X, `SR_A, `A_A, `OP_ROR, `R, `D_DI, `O, `AA, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
+	{`S_XX, `NON, 8'h6A, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AA, `X, `R_A, `A_PC, `O, `O, `O, `O, `O, `X, `X};
 	// SBC imm
-	{`S_XX, `NON, 8'hE9, `C_0}: x <= {`X, `X, `O, `O, `O, `X, `X, `SR_A, `A_A, `OP_SUB, `R, `D_DI, `O, `AA, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
-	{`S_XX, `NON, 8'hE9, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AA, `X, `R_A, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	{`S_XX, `NON, 8'hE9, `C_0}: x <= {`E_0, `X, `X, `O, `O, `O, `X, `X, `SR_A, `A_A, `OP_SUB, `R, `D_DI, `O, `AA, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'hE9, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AA, `X, `R_A, `A_PC, `O, `O, `O, `O, `O, `X, `X};
 	// SEC
-	{`S_XX, `NON, 8'h38, `C_0}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_F, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
-	{`S_XX, `NON, 8'h38, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `X, `SR_F, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	{`S_XX, `NON, 8'h38, `C_0}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_F, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
+	{`S_XX, `NON, 8'h38, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `X, `SR_F, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
 	// SED
-	{`S_XX, `NON, 8'hF8, `C_0}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_F, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
-	{`S_XX, `NON, 8'hF8, `C_1}: x <= {`O, `O, `O, `X, `O, `O, `O, `SR_F, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	{`S_XX, `NON, 8'hF8, `C_0}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_F, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
+	{`S_XX, `NON, 8'hF8, `C_1}: x <= {`E_0, `O, `O, `O, `X, `O, `O, `O, `SR_F, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
 	// SEI
-	{`S_XX, `NON, 8'h78, `C_0}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_F, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
-	{`S_XX, `NON, 8'h78, `C_1}: x <= {`O, `O, `O, `O, `X, `O, `O, `SR_F, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
+	{`S_XX, `NON, 8'h78, `C_0}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_F, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
+	{`S_XX, `NON, 8'h78, `C_1}: x <= {`E_0, `O, `O, `O, `O, `X, `O, `O, `SR_F, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `X};
 	// STA abs
-	{`S_XX, `NON, 8'h8D, `C_0}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
-	{`S_XX, `NON, 8'h8D, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `X, `O, `O, `O, `X, `O};
-	{`S_XX, `NON, 8'h8D, `C_2}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `W, `D_RA, `O, `AD, `O, `R_N, `A_DL, `X, `O, `O, `O, `O, `X, `O};
-	{`S_XX, `NON, 8'h8D, `C_3}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `X};
+	{`S_XX, `NON, 8'h8D, `C_0}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'h8D, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `X, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'h8D, `C_2}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `W, `D_RA, `O, `AD, `O, `R_N, `A_DL, `X, `O, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'h8D, `C_3}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `X};
 	// STX abs
-	{`S_XX, `NON, 8'h8E, `C_0}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
-	{`S_XX, `NON, 8'h8E, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `X, `O, `O, `O, `X, `O};
-	{`S_XX, `NON, 8'h8E, `C_2}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `W, `D_RX, `O, `AD, `O, `R_N, `A_DL, `X, `O, `O, `O, `O, `X, `O};
-	{`S_XX, `NON, 8'h8E, `C_3}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `X};
+	{`S_XX, `NON, 8'h8E, `C_0}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'h8E, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `X, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'h8E, `C_2}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `W, `D_RX, `O, `AD, `O, `R_N, `A_DL, `X, `O, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'h8E, `C_3}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `X};
 	// STY abs
-	{`S_XX, `NON, 8'h8C, `C_0}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
-	{`S_XX, `NON, 8'h8C, `C_1}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `X, `O, `O, `O, `X, `O};
-	{`S_XX, `NON, 8'h8C, `C_2}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `W, `D_RY, `O, `AD, `O, `R_N, `A_DL, `X, `O, `O, `O, `O, `X, `O};
-	{`S_XX, `NON, 8'h8C, `C_3}: x <= {`O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `X};
+	{`S_XX, `NON, 8'h8C, `C_0}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'h8C, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `X, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'h8C, `C_2}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `W, `D_RY, `O, `AD, `O, `R_N, `A_DL, `X, `O, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'h8C, `C_3}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `X};
+	// TAX
+	{`S_XX, `NON, 8'hAA, `C_0}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_RA, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'hAA, `C_1}: x <= {`E_0, `X, `O, `O, `O, `O, `X, `O, `SR_A, `A_X, `OP_TST, `R, `D_DI, `O, `AD, `X, `R_X, `A_PC, `O, `O, `O, `O, `O, `O, `X};
 
-	default:                    x <= {`X, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, 3'b00, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
+	default:                    x <= {`E_U, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
       endcase
    end
 endmodule 

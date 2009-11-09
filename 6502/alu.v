@@ -127,7 +127,7 @@ module alu(
 				      (op_l == `OP_ROL ? {1'b0, rol_out} : 
 				       (op_l == `OP_ROR ? {1'b0, ror_out} : 
 					(op_l == `OP_SUB ? {sub_v, sub_out} :
-					 (op_l == `OP_TST ? {2'b0, data_in} :
+					 (op_l == `OP_TST ? {2'b0, arg} :
 					  (op_l == `OP_BAD ? {add_v, add_out} : 
 					   10'h0FF))))))))))))));
    

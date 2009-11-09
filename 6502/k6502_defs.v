@@ -113,7 +113,10 @@
 
 `define X_UPDATE_N	33
 
+`define X_EXCEPTION     34
+`define   E_0		  1'b0
+`define   E_U		  1'b1
 
-`define X_BITS		34
+`define X_BITS		35
 
 

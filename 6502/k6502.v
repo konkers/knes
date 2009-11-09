@@ -24,6 +24,7 @@ module k6502(
     output [15:0] 	 pc,
     output [15:0] 	 dl, 	 
     output [7:0] 	 ir,
+    output 		 ex,
 `endif
     output [15:0] 	 a,
     inout [7:0] 	 d,
@@ -176,7 +177,9 @@ module k6502(
 			    x[`X_UPDATE_I],
 			    x[`X_UPDATE_Z],
 			    x[`X_UPDATE_C]};
-   			  
+`ifdef DEBUG
+   assign ex = x[`X_EXCEPTION];
+`endif
    wire       rst;
    wire       nmi;
    wire       irq;
@@ -250,6 +253,20 @@ module k6502(
 
    assign d = (rw == `W) ? data : 8'hZZ;
 
+`ifdef TRACE
+   reg [31:0] clk_counter;
+   always @(posedge clk) begin
+      if (rst_n == 1'b0)
+	clk_counter <= 0;
+      else
+	clk_counter = clk_counter + 1;
+   end
 
+   initial $display("clk_counter, pc, ir, sr, ra_data, rx_data, ry_data");
+   
+   always @(posedge sync) begin
+      #1 $display("%d, %h, %h, %h, %h, %h, %h", clk_counter, pc, ir, sr, ra_data, rx_data, ry_data);
+   end
+`endif
    
 endmodule
