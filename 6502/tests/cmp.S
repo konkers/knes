@@ -16,6 +16,41 @@ PPUADDR = $2006
 PPUDATA = $2007
 
 reset:
+	lda #$00
+	cmp data0
+	cmp data1
+	cmp data2
+	cmp data3
+	cmp data4
+
+	lda #$5A
+	cmp data0
+	cmp data1
+	cmp data2
+	cmp data3
+	cmp data4
+	
+	lda #$80
+	cmp data0
+	cmp data1
+	cmp data2
+	cmp data3
+	cmp data4
+	
+	lda #$A5
+	cmp data0
+	cmp data1
+	cmp data2
+	cmp data3
+	cmp data4
+	
+	lda #$FF
+	cmp data0
+	cmp data1
+	cmp data2
+	cmp data3
+	cmp data4
+
 	ldx #$00
 	cpx data0
 	cpx data1
