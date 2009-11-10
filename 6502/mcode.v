@@ -249,6 +249,16 @@ module mcode(
 	// TAX
 	{`S_XX, `NON, 8'hAA, `C_0}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_RA, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
 	{`S_XX, `NON, 8'hAA, `C_1}: x <= {`E_0, `X, `O, `O, `O, `O, `X, `O, `SR_A, `A_X, `OP_TST, `R, `D_DI, `O, `AD, `X, `R_X, `A_PC, `O, `O, `O, `O, `O, `O, `X};
+	// TAY
+	{`S_XX, `NON, 8'hA8, `C_0}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_RA, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'hA8, `C_1}: x <= {`E_0, `X, `O, `O, `O, `O, `X, `O, `SR_A, `A_Y, `OP_TST, `R, `D_DI, `O, `AD, `X, `R_Y, `A_PC, `O, `O, `O, `O, `O, `O, `X};
+	// TXA
+	{`S_XX, `NON, 8'h8A, `C_0}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_RX, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'h8A, `C_1}: x <= {`E_0, `X, `O, `O, `O, `O, `X, `O, `SR_A, `A_A, `OP_TST, `R, `D_DI, `O, `AD, `X, `R_A, `A_PC, `O, `O, `O, `O, `O, `O, `X};
+	// TYA
+	{`S_XX, `NON, 8'h98, `C_0}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_RY, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'h98, `C_1}: x <= {`E_0, `X, `O, `O, `O, `O, `X, `O, `SR_A, `A_A, `OP_TST, `R, `D_DI, `O, `AD, `X, `R_A, `A_PC, `O, `O, `O, `O, `O, `O, `X};
+
 
 	default:                    x <= {`E_U, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
       endcase
