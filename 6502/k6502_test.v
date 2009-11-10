@@ -62,7 +62,18 @@ module k6502_test;
    rom rom(.addr({1'b0, a[14:0]}),
 	   .data(d),
 	   .oe_n(rw | ~a[15]));
+
+   wire 	   sram_oe;
+   wire 	   sram_w;
+
+   assign sram_oe = (rw == 0) && (a[15:13] == 3'b000);
+   assign sram_w = (rw == 1) && (a[15:13] == 3'b000) && clk;
       
+   sram sram(.data(d),
+	     .addr(a[10:0]),
+	     .w(sram_w),
+	     .oe(sram_oe));
+   	     
    initial // Clock generator
      begin
 	clk = 1;
