@@ -17,7 +17,7 @@ TESTS=${ASM_TESTS:.S=}
 TEST_OUTS=${ASM_TESTS:.S=-out.csv}
 
 tests: ${TXT_TESTS}
-	${IVERILOG} -DTRACE -Wall -y. -o k6502_test k6502_test.v
+	${IVERILOG} -DEX -DTRACE -Wall -y. -o k6502_test k6502_test.v
 	@for test in ${TESTS}; do \
 		cp $$test.txt rom.txt; \
 		${VVP} -n ./k6502_test > /dev/null ; \
