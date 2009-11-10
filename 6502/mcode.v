@@ -147,7 +147,7 @@ module mcode(
 	{`S_XX, `RST, 8'hxx, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_FF, `O, `AD, `O, `R_N, `A_PC, `O, `X, `O, `O, `O, `O, `O};
 	{`S_XX, `RST, 8'hxx, `C_2}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_DL, `X, `O, `O, `O, `O, `O, `O};
 	{`S_XX, `RST, 8'hxx, `C_3}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_DL, `O, `O, `O, `X, `X, `O, `O};
-	{`S_XX, `RST, 8'hxx, `C_4}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `X, `AD, `O, `R_N, `A_PC, `O, `O, `X, `O, `O, `O, `X};
+	{`S_XX, `RST, 8'hxx, `C_4}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_BAD, `R, `D_DI, `X, `AD, `O, `R_N, `A_PC, `O, `O, `X, `O, `O, `O, `X};
 	
 	// ADC, AND, CMP, EOR, ORA, SBC imm
 	{`S_XX, `NON, 8'b0xx01001, `C_0}: x <= {`E_0, sr_up, `SR_A, `A_A,  alu_op, `R, `D_DI, `O, `AA, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
@@ -166,6 +166,15 @@ module mcode(
 	{`S_XX, `NON, 8'b11x01101, `C_1}: x <= {`E_0, `ZMSK, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `X, `O, `O, `O, `X, `O};
 	{`S_XX, `NON, 8'b11x01101, `C_2}: x <= {`E_0, sr_up, `SR_A, `A_A,  alu_op, `R, `D_DI, `O, `AA, `O, `R_N, `A_DL, `X, `O, `O, `O, `O, `X, `O};
 	{`S_XX, `NON, 8'b11x01101, `C_3}: x <= {`E_0, `ZMSK, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AA, wb, `R_A, `A_PC, `O, `O, `O, `O, `O, `O, `X};
+
+	// ADC, AND, CMP, EOR, ORA, SBC zpg
+	{`S_XX, `NON, 8'b0xx00101, `C_0}: x <= {`E_0, `ZMSK, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'b0xx00101, `C_1}: x <= {`E_0, sr_up, `SR_A, `A_A,  alu_op, `R, `D_DI, `O, `AA, `O, `R_N, `A_ZP, `O, `X, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'b0xx00101, `C_2}: x <= {`E_0, `ZMSK, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AA, wb, `R_A, `A_PC, `O, `O, `O, `O, `O, `O, `X};
+
+	{`S_XX, `NON, 8'b11x00101, `C_0}: x <= {`E_0, `ZMSK, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'b11x00101, `C_1}: x <= {`E_0, sr_up, `SR_A, `A_A,  alu_op, `R, `D_DI, `O, `AA, `O, `R_N, `A_ZP, `O, `X, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'b11x00101, `C_2}: x <= {`E_0, `ZMSK, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AA, wb, `R_A, `A_PC, `O, `O, `O, `O, `O, `O, `X};
 
 	// ASL, ROL, LSR, ROR A
 	{`S_XX, `NON, 8'b0xx01010, `C_0}: x <= {`E_0, sr_up, `SR_A, `A_A,  alu_op, `R, `D_DI, `O, `AA, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `O};
@@ -186,6 +195,19 @@ module mcode(
 	{`S_XX, `NON, 8'b11x01110, `C_4}: x <= {`E_0, `ZMSK, `SR_0, `A_N, `OP_XXX, wb, `D_RD, `O, `AD, `O, `R_N, `A_DL, `O, `O, `O, `O, `O, `O, `O};
 	{`S_XX, `NON, 8'b11x01110, `C_5}: x <= {`E_0, `ZMSK, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `X};
 
+	// ASL, ROL, LSR, ROR, DEC, INC zpg
+	{`S_XX, `NON, 8'b0xx00110, `C_0}: x <= {`E_0, `ZMSK, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'b0xx00110, `C_1}: x <= {`E_0, sr_up, `SR_A, `A_D,  alu_op, `R, `D_AL, `O, `AD, `O, `R_N, `A_ZP, `O, `X, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'b0xx00110, `C_2}: x <= {`E_0, `ZMSK, `SR_0, `A_D, `OP_XXX, `R, `D_DI, `O, `AD, `X, `R_D, `A_ZP, `O, `O, `O, `O, `O, `O, `O};
+	{`S_XX, `NON, 8'b0xx00110, `C_3}: x <= {`E_0, `ZMSK, `SR_0, `A_N, `OP_XXX, wb, `D_RD, `O, `AD, `O, `R_N, `A_ZP, `O, `O, `O, `O, `O, `O, `O};
+	{`S_XX, `NON, 8'b0xx00110, `C_4}: x <= {`E_0, `ZMSK, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `X};
+
+	{`S_XX, `NON, 8'b11x00110, `C_0}: x <= {`E_0, `ZMSK, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'b11x00110, `C_1}: x <= {`E_0, sr_up, `SR_A, `A_D,  alu_op, `R, `D_AL, `O, `AD, `O, `R_N, `A_ZP, `O, `X, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'b11x00110, `C_2}: x <= {`E_0, `ZMSK, `SR_0, `A_D, `OP_XXX, `R, `D_DI, `O, `AD, `X, `R_D, `A_ZP, `O, `O, `O, `O, `O, `O, `O};
+	{`S_XX, `NON, 8'b11x00110, `C_3}: x <= {`E_0, `ZMSK, `SR_0, `A_N, `OP_XXX, wb, `D_RD, `O, `AD, `O, `R_N, `A_ZP, `O, `O, `O, `O, `O, `O, `O};
+	{`S_XX, `NON, 8'b11x00110, `C_4}: x <= {`E_0, `ZMSK, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `X};
+	
 	// BRANCHES - 
 	{`S_XX, `NON, `BRXX, `C_0}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_L, `OP_BAD, `R, `D_AL, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
 
