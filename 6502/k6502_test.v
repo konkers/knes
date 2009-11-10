@@ -38,6 +38,22 @@ module k6502_test;
    wire [7:0]      rx_data;
    wire [7:0]      ry_data;
    wire 	   ex;
+   wire 	   sr_c;
+   wire 	   sr_z;
+   wire 	   sr_i;
+   wire 	   sr_d;
+   wire 	   sr_b;
+   wire 	   sr_v;
+   wire 	   sr_n;
+
+   assign sr_c = sr[`SR_C];
+   assign sr_z = sr[`SR_Z];
+   assign sr_i = sr[`SR_I];
+   assign sr_d = sr[`SR_D];
+   assign sr_b = sr[`SR_B];
+   assign sr_v = sr[`SR_V];
+   assign sr_n = sr[`SR_N];
+   
 `endif
 
    k6502 k6502(
