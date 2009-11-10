@@ -116,8 +116,10 @@ module k6502_test;
 
 `ifdef EX
    always @(negedge clk) begin
-      if ((rst_n == 1) && (ex == 1))
-	$finish;
+      if ((rst_n == 1) && (ex == 1)) begin
+	 $display("unknown instruction");
+	 $finish;
+      end
    end
 `endif
    
