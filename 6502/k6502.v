@@ -81,7 +81,7 @@ module k6502(
    wire [7:0] 	  alu_sr;
    wire [7:0] 	  alu_data;
 
-   wire [1:0] 	  reg_sel;
+   wire [2:0] 	  reg_sel;
    wire 	  reg_w;
    
    wire 	  ra_latch;
@@ -121,7 +121,20 @@ module k6502(
 	       .latch(ry_latch),
 	       .clk(clk),
 	       .rst_n(rst_n));
-   
+
+   // rd holds data for read modify write instrucitons
+   // which operate on memory
+   wire 	  rd_latch;
+   wire [7:0] 	  rd_data;
+ 	  
+   assign rd_latch = (reg_sel == `R_D) && reg_w;
+
+   register rd(.data_in(data),
+	       .data_out(rd_data),
+	       .latch(rd_latch),
+	       .clk(clk),
+	       .rst_n(rst_n));
+
    wire [7:0] 	  sr;
    wire [7:0] 	  sr_update_mask;
    wire [1:0] 	  sr_update_sel;
@@ -245,7 +258,7 @@ module k6502(
 		     .data4(8'hFF),
 		     .data5(fi),
 		     .data6(alu_data),
-		     .data7(8'hFF));
+		     .data7(rd_data));
 
    assign d = (rw == `W) ? data : 8'hZZ;
 

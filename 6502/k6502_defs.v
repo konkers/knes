@@ -41,21 +41,23 @@
 `define   ADDR_MODE_PC    2'b00
 `define   ADDR_MODE_DL    2'b01
 
-`define X_REG_SEL       10:9
-`define   R_N             2'b00
-`define   R_X             2'b00
-`define   R_Y             2'b01
-`define   R_A             2'b10
+`define X_REG_SEL       11:9
+`define   R_N             3'b000
+`define   R_X             3'b000
+`define   R_Y             3'b001
+`define   R_A             3'b010
+`define   R_S             3'b011
+`define   R_D             3'b100
 
-`define X_REG_W		11
+`define X_REG_W		12
 
-`define X_A_DATA_SEL	12
+`define X_A_DATA_SEL	13
 `define   AD		  1'b0
 `define   AA		  1'b1
 
-`define X_PC_UPDATE	13
+`define X_PC_UPDATE	14
 
-`define X_DATA_SEL      16:14
+`define X_DATA_SEL      17:15
 `define   D_DI            3'h0
 `define   D_RA            3'h1
 `define   D_RX            3'h2
@@ -63,12 +65,13 @@
 `define   D_FF            3'h4
 `define   D_FI            3'h5
 `define   D_AL            3'h6
+`define   D_RD            3'h7
 
-`define X_RW		17
+`define X_RW		18
 `define   R               1'b0
 `define   W               1'b1
 
-`define X_ALU_OP	21:18
+`define X_ALU_OP	22:19
 `define   OP_XXX	  4'h0
 `define   OP_ADD	  4'h0
 `define   OP_AND          4'h1
@@ -85,7 +88,7 @@
 `define   OP_TST          4'hC
 `define   OP_BAD          4'hD
 
-`define X_ALU_INPUT	24:22
+`define X_ALU_INPUT	25:23
 `define A_N		  3'b000
 `define A_A		  3'b001
 `define A_X		  3'b010
@@ -93,30 +96,30 @@
 `define A_L		  3'b100
 `define A_H		  3'b101
 
-`define X_SR_SEL	26:25
+`define X_SR_SEL	27:26
 `define   SR_0		  2'b00
 `define   SR_F		  2'b01
 `define   SR_A		  2'b10
 `define   SR_X		  2'b11
 
-`define X_UPDATE_C	27
+`define X_UPDATE_C	28
 
-`define X_UPDATE_Z	28
+`define X_UPDATE_Z	29
 
-`define X_UPDATE_I	29
+`define X_UPDATE_I	30
 
-`define X_UPDATE_D	30
+`define X_UPDATE_D	31
 
-`define X_UPDATE_B	31
+`define X_UPDATE_B	32
 
-`define X_UPDATE_V	32
+`define X_UPDATE_V	33
 
-`define X_UPDATE_N	33
+`define X_UPDATE_N	34
 
-`define X_EXCEPTION     34
+`define X_EXCEPTION     35
 `define   E_0		  1'b0
 `define   E_U		  1'b1
 
-`define X_BITS		35
+`define X_BITS		36
 
 
