@@ -20,11 +20,15 @@
 
 module k6502(
 `ifdef DEBUG
-    output [`X_BITS-1:0] x,
-    output [15:0] 	 pc,
-    output [15:0] 	 dl, 	 
-    output [7:0] 	 ir,
-    output 		 ex,
+    output [`X_BITS-1:0] debug_x,
+    output [15:0] 	 debug_dl, 	 
+    output [7:0] 	 debug_ir,
+    output [15:0] 	 debug_pc,
+    output [7:0] 	 debug_sr,
+    output [7:0] 	 debug_ra_data,
+    output [7:0] 	 debug_rx_data,
+    output [7:0] 	 debug_ry_data,
+    output 		 debug_ex,
 `endif
     output [15:0] 	 a,
     inout [7:0] 	 d,
@@ -36,9 +40,7 @@ module k6502(
 
    wire [7:0] 		 data;
       
-`ifndef DEBUG
    wire [15:0] 	  dl;
-`endif
    wire 	  dl_latch_l;
    wire 	  dl_latch_h;
    wire 	  dl_inc;
@@ -49,9 +51,7 @@ module k6502(
 			 .latch_h(dl_latch_h),
 			 .inc(dl_inc));
       
-`ifndef DEBUG
    wire [15:0] 	  pc;
-`endif
    wire 	  pc_inc;
    wire 	  carry_out_l;
    wire 	  carry_out_h;
@@ -134,10 +134,8 @@ module k6502(
 	     .update_sel(sr_update_sel),
 	     .alu_data(alu_sr));
       
-`ifndef DEBUG
    wire [`X_BITS-1:0] x;
    wire [7:0] ir;
-`endif
    wire [5:0] cycle;
    wire [2:0] data_sel;
    wire       rw_in;
@@ -177,9 +175,7 @@ module k6502(
 			    x[`X_UPDATE_I],
 			    x[`X_UPDATE_Z],
 			    x[`X_UPDATE_C]};
-`ifdef DEBUG
-   assign ex = x[`X_EXCEPTION];
-`endif
+
    wire       rst;
    wire       nmi;
    wire       irq;
@@ -253,20 +249,18 @@ module k6502(
 
    assign d = (rw == `W) ? data : 8'hZZ;
 
-`ifdef TRACE
-   reg [31:0] clk_counter;
-   always @(posedge clk) begin
-      if (rst_n == 1'b0)
-	clk_counter <= 0;
-      else
-	clk_counter = clk_counter + 1;
-   end
-
-   initial $display("clk_counter, pc, ir, sr, ra_data, rx_data, ry_data");
-   
-   always @(posedge sync) begin
-      #1 $display("%d, %h, %h, %h, %h, %h, %h", clk_counter, pc, ir, sr, ra_data, rx_data, ry_data);
-   end
+`ifdef DEBUG
+   assign debug_x = x;
+   assign debug_dl = dl;
+   assign debug_ir = ir;
+   assign debug_pc = pc;
+   assign debug_sr = sr;
+   assign debug_ra_data = ra_data;
+   assign debug_rx_data = rx_data;
+   assign debug_ry_data = ry_data;
+   assign debug_ex = x[`X_EXCEPTION];
 `endif
+
+
    
 endmodule

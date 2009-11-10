@@ -20,7 +20,8 @@ tests: ${TXT_TESTS}
 	${IVERILOG} -DTRACE -Wall -y. -o k6502_test k6502_test.v
 	@for test in ${TESTS}; do \
 		cp $$test.txt rom.txt; \
-		${VVP} -n ./k6502_test | grep -v "VCD info" > $$test-out.csv; \
+		${VVP} -n ./k6502_test > /dev/null ; \
+		mv k6502_test.csv $$test-out.csv; \
 		rm rom.txt; \
 		diff $$test-out.csv $$test-pass.csv > /dev/null; \
 		if [ "$$?" == "0" ]; then \
