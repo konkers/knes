@@ -35,7 +35,7 @@ tests: ${TXT_TESTS}
 dumper: dumper.o
 
 %_test: %_test.v
-	${IVERILOG} -Wall -y. -o $@ $<
+	${IVERILOG} -DEX -DTRACE -Wall -y. -o $@ $<
 
 %.vcd: %
 	${VVP} -n ./$<
