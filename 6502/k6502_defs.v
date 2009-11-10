@@ -95,6 +95,7 @@
 `define A_Y		  3'b011
 `define A_L		  3'b100
 `define A_H		  3'b101
+`define A_D		  3'b110
 
 `define X_SR_SEL	27:26
 `define   SR_0		  2'b00

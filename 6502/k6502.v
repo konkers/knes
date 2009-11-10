@@ -239,7 +239,7 @@ module k6502(
 	   .arg3(ry_data),
 	   .arg4(pc[7:0]),
 	   .arg5(pc[15:8]),
-	   .arg6(8'hFF),
+	   .arg6(d),
 	   .arg7(8'hFF));
    
    wire [7:0] fi;
