@@ -168,7 +168,7 @@ module k6502(
 			 .addr_sel(x[`X_ADDR_MODE]),
 			 .addr0(pc),
 			 .addr1(dl),
-			 .addr2(16'hDEAD),
+			 .addr2({8'h00,dl[7:0]}),
 			 .addr3(16'hBEEF));
 
    assign reg_sel    = x[`X_REG_SEL];

@@ -40,6 +40,7 @@
 `define X_ADDR_MODE	8:7
 `define   ADDR_MODE_PC    2'b00
 `define   ADDR_MODE_DL    2'b01
+`define   ADDR_MODE_ZP    2'b10
 
 `define X_REG_SEL       11:9
 `define   R_N             3'b000
