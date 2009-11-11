@@ -88,6 +88,7 @@
 `define   OP_SUB          4'hB
 `define   OP_TST          4'hC
 `define   OP_BAD          4'hD
+`define   OP_DAD          4'hE
 
 `define X_ALU_INPUT	25:23
 `define A_N		  3'b000

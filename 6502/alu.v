@@ -54,7 +54,7 @@ module alu(
    end
 
    always @(posedge clk) begin
-      if (op_l == `OP_BAD)
+      if ((op_l == `OP_BAD) || (op_l == `OP_DAD))
 	b_sr <= {sr_data[`SR_V], sr_data[`SR_C]};
    end
    
@@ -69,7 +69,8 @@ module alu(
    wire [8:0] add_out;
    wire       add_v;
    wire       add_c;
-   assign add_c = op_l == `OP_BAD ? 1'b1 : op_sr[`SR_C];
+   assign add_c = (op_l == `OP_BAD ? 1'b1 : 
+		   (op_l == `OP_DAD ? 1'b0 : op_sr[`SR_C]));
 
    assign add_out = arg + data_in + add_c;
    assign add_v = data_in[7] == 0 ? ~arg[7] & add_out[7] :
@@ -129,7 +130,8 @@ module alu(
 					(op_l == `OP_SUB ? {sub_v, sub_out} :
 					 (op_l == `OP_TST ? {2'b0, arg} :
 					  (op_l == `OP_BAD ? {add_v, add_out} : 
-					   10'h0FF))))))))))))));
+					   (op_l == `OP_DAD ? {add_v, add_out} : 
+					    10'h0FF)))))))))))))));
    
    assign n = data_out[7];
    assign z = ~(data_out[7] | data_out[6] |
