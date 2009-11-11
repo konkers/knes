@@ -1,0 +1,19 @@
+clk_counter, pc, ir, sr, ra_data, rx_data, ry_data
+         6, 8000, a2, 34, 00, 00, 00
+         8, 8002, a9, 34, 00, 3f, 00
+        10, 8004, 9d, 34, 5a, 3f, 00
+write 103f=5a
+        14, 8007, a9, 34, 5a, 3f, 00
+        16, 8009, 9d, b4, a5, 3f, 00
+write 10bf=a5
+        20, 800c, a9, b4, a5, 3f, 00
+        22, 800e, 9d, b4, ff, 3f, 00
+write 112e=ff
+        26, 8011, bd, b4, ff, 3f, 00
+        30, 8014, bd, b4, a5, 3f, 00
+        35, 8017, bd, b4, ff, 3f, 00
+        39, 801a, bc, 34, 5a, 3f, 00
+        43, 801d, bc, b4, 5a, 3f, a5
+        48, 8020, bc, b4, 5a, 3f, ff
+        52, 8023, 8e, 34, 5a, 3f, 5a
+write dead=3f
