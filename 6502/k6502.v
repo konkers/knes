@@ -225,6 +225,12 @@ module k6502(
 	     .sync(sync),
 	     .rst_n(rst_n));
 
+   // the br_c input of the alu needs to be delayed half a clock
+   reg 	      alu_br_c_in;
+
+   always @(negedge clk)
+     alu_br_c_in <= b_sr[`SR_C];
+   
    alu alu(.clk(clk),
 	   .data_in(d),
 	   .data_out(alu_data),
@@ -240,7 +246,7 @@ module k6502(
 	   .arg4(pc[7:0]),
 	   .arg5(pc[15:8]),
 	   .arg6(d),
-	   .arg7(8'hFF));
+	   .arg7({7'h00, alu_br_c_in}));
    
    wire [7:0] fi;
    assign fi = (rst == 1'b1 ? 8'hFC :

@@ -70,7 +70,8 @@ module alu(
    wire       add_v;
    wire       add_c;
    assign add_c = (op_l == `OP_BAD ? 1'b1 : 
-		   (op_l == `OP_DAD ? 1'b0 : op_sr[`SR_C]));
+		   (op_l == `OP_DAD ? 1'b0 :
+		    (op_l == `OP_ADD ? 1'b0 : op_sr[`SR_C])));
 
    assign add_out = arg + data_in + add_c;
    assign add_v = data_in[7] == 0 ? ~arg[7] & add_out[7] :
@@ -116,7 +117,7 @@ module alu(
    assign sub_v = data_in[7] == 1 ? ~arg[7] & sub_out[7] :
 		  arg[7] & ~sub_out[7];
    
-   assign {v, c, data_out} = (op_l == `OP_ADD ? {add_v, add_out} :
+   assign {v, c, data_out} = (op_l == `OP_ADC ? {add_v, add_out} :
 			      (op_l == `OP_AND ? {2'b0, and_out} : 
 			       (op_l == `OP_ASL ? {1'b0, asl_out} : 
 				(op_l == `OP_CMP ? {1'b0, cmp_out} : 
@@ -127,12 +128,12 @@ module alu(
 				     (op_l == `OP_OR  ? {2'b0, or_out } : 
 				      (op_l == `OP_ROL ? {1'b0, rol_out} : 
 				       (op_l == `OP_ROR ? {1'b0, ror_out} : 
-					(op_l == `OP_SUB ? {sub_v, sub_out} :
+					(op_l == `OP_SBC ? {sub_v, sub_out} :
 					 (op_l == `OP_TST ? {2'b0, arg} :
 					  (op_l == `OP_BAD ? {add_v, add_out} : 
 					   (op_l == `OP_DAD ? {add_v, add_out} : 
-					    10'h0FF)))))))))))))));
-   
+					    {add_v, add_out} )))))))))))))));
+      
    assign n = data_out[7];
    assign z = ~(data_out[7] | data_out[6] |
 		data_out[5] | data_out[4] |

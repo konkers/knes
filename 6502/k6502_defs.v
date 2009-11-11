@@ -74,7 +74,7 @@
 
 `define X_ALU_OP	22:19
 `define   OP_XXX	  4'h0
-`define   OP_ADD	  4'h0
+`define   OP_ADC	  4'h0
 `define   OP_AND          4'h1
 `define   OP_ASL          4'h2
 `define   OP_CMP          4'h3
@@ -85,10 +85,11 @@
 `define   OP_OR           4'h8
 `define   OP_ROL          4'h9
 `define   OP_ROR          4'hA
-`define   OP_SUB          4'hB
+`define   OP_SBC          4'hB
 `define   OP_TST          4'hC
 `define   OP_BAD          4'hD
 `define   OP_DAD          4'hE
+`define   OP_ADD          4'hF
 
 `define X_ALU_INPUT	25:23
 `define A_N		  3'b000
@@ -98,6 +99,7 @@
 `define A_L		  3'b100
 `define A_H		  3'b101
 `define A_D		  3'b110
+`define A_C		  3'b111
 
 `define X_SR_SEL	27:26
 `define   SR_0		  2'b00
