@@ -25,13 +25,14 @@
 `define A_DL	`ADDR_MODE_DL
 `define A_ZP	`ADDR_MODE_ZP
 
-`define C_N	6'b000000
-`define C_0	6'b000001
-`define C_1	6'b000010
-`define C_2	6'b000100
-`define C_3	6'b001000
-`define C_4	6'b010000
-`define C_5	6'b100000
+`define C_N	7'b0000000
+`define C_0	7'b0000001
+`define C_1	7'b0000010
+`define C_2	7'b0000100
+`define C_3	7'b0001000
+`define C_4	7'b0010000
+`define C_5	7'b0100000
+`define C_6	7'b1000000
 
 `define RST	3'b100
 `define NMI	3'b010
@@ -65,7 +66,7 @@ module mcode(
     input [7:0]               ir,
     input [7:0] 	      sr, 	      
     input [1:0] 	      b_sr, 	      
-    input [5:0]               cycle,
+    input [6:0]               cycle,
     input 		      rst,
     input 		      nmi,
     input 		      irq,

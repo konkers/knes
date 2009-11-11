@@ -149,7 +149,7 @@ module k6502(
       
    wire [`X_BITS-1:0] x;
    wire [7:0] ir;
-   wire [5:0] cycle;
+   wire [6:0] cycle;
    wire [2:0] data_sel;
    wire       rw_in;
    wire [3:0] alu_op;

@@ -17,7 +17,7 @@
 `timescale 1ns/1ps
 
 module inst_seq(
-    output reg [5:0] cycle,
+    output reg [6:0] cycle,
     output reg 	     sync,
     input 	     next_sync,
     input 	     rst_n,
@@ -25,13 +25,13 @@ module inst_seq(
 
    always @(posedge clk) begin
       if (rst_n == 1'b0) begin
-	 cycle <= 6'b000000;
+	 cycle <= 7'b000000;
       end else if (next_sync == 1) begin
-	 cycle <= 6'b000001;
-      end else if (cycle == 6'b000000) begin
-	 cycle <= 6'b000001;
+	 cycle <= 7'b000001;
+      end else if (cycle == 7'b000000) begin
+	 cycle <= 7'b000001;
       end else begin
-	 cycle[5:0] <= {cycle[4:0],1'b0};
+	 cycle[6:0] <= {cycle[5:0],1'b0};
       end
       sync <= next_sync;
    end
