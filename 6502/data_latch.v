@@ -17,8 +17,9 @@
 `timescale 1ns/1ps
 
 module data_latch(
+    input             clk,
     input [7:0]       data_in,
-    output reg [15:0] data_out,
+    output reg [15:0]     data_out,
     input 	      latch_l,
     input 	      latch_h,
     input 	      inc);
@@ -28,24 +29,20 @@ module data_latch(
 
    wire 	      tmp_l;
    wire 	      tmp_h;
-   
-   
-   assign {carry, data_inc} = data_out + 1;
-   assign tmp_l = latch_l | inc;
-   assign tmp_h = latch_h | inc;
 
-   always @(posedge tmp_l) begin
-      if (inc == 1'b0)
-	data_out[7:0] <= data_in;
-      else
-	data_out[7:0] <= data_inc[7:0];
+   reg [15:0] 	      data;
+      
+   assign {carry, data_inc} = data + 1;
+
+   always @(negedge clk) 
+     data_out <= inc == 1'b1 ? data_inc : data;
+      
+   always @(posedge latch_l) begin
+      	data[7:0] <= data_in;
    end
- 
-   always @(posedge tmp_h) begin
-      if (inc == 1'b0)
-	data_out[15:8] <= data_in;
-      else
-	data_out[15:8] <= data_inc[15:8];
+
+   always @(posedge latch_h) begin
+      	data[15:8] <= data_in;
    end
  
 endmodule

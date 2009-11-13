@@ -45,7 +45,8 @@ module k6502(
    wire 	  dl_latch_h;
    wire 	  dl_inc;
    	  
-   data_latch data_latch(.data_in(data),
+   data_latch data_latch(.clk(clk),
+			 .data_in(data),
 			 .data_out(dl),
 			 .latch_l(dl_latch_l),
 			 .latch_h(dl_latch_h),
