@@ -1,26 +1,32 @@
-[timestart] 0
-[size] 1348 504
+[timestart] 1376000
+[size] 1584 585
 [pos] -1 -1
-*-19.974207 3680 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-19.974207 5732000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] k6502_test.
 [treeopen] k6502_test.k6502.
 @28
 k6502_test.clk
 k6502_test.rst_n
 k6502_test.sync
+k6502_test.k6502.rw
 @22
 k6502_test.a[15:0]
 k6502_test.d[7:0]
-k6502_test.rom.data[7:0]
-k6502_test.k6502.inst_seq.cycle[5:0]
-@29
+@28
 k6502_test.k6502.pc_inc
 @22
 k6502_test.k6502.pc[15:0]
 @28
-k6502_test.k6502.reg_w
-k6502_test.k6502.reg_sel[1:0]
+k6502_test.k6502.data_sel[2:0]
 @22
-k6502_test.k6502.ra.val[7:0]
-k6502_test.k6502.rx.val[7:0]
-k6502_test.k6502.ry.val[7:0]
+k6502_test.k6502.data[7:0]
+@28
+k6502_test.k6502.reg_w
+@22
+k6502_test.k6502.ra_data[7:0]
+k6502_test.k6502.rd_data[7:0]
+k6502_test.k6502.rx_data[7:0]
+k6502_test.k6502.ry_data[7:0]
+k6502_test.k6502.alu.arg[7:0]
+@28
+k6502_test.k6502.alu.arg_sel[2:0]
