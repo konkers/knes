@@ -532,6 +532,13 @@ module mcode(
 	{`S_XX, `NON, 8'h81, `C_3}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_ZP, `X, `O, `O, `O, `O, `O, `O};
 	{`S_XX, `NON, 8'h81, `C_4}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `W, `D_RA, `O, `AD, `O, `R_N, `A_DL, `O, `X, `O, `O, `O, `O, `O};
 	{`S_XX, `NON, 8'h81, `C_5}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `X};
+	// STA (ind),Y
+	{`S_XX, `NON, 8'h91, `C_0}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'h91, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_Y, `OP_DAD, `R, `D_AL, `O, `AD, `O, `R_N, `A_ZP, `O, `X, `O, `O, `O, `X, `O};
+	{`S_XX, `NON, 8'h91, `C_2}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_C, `OP_DAD, `R, `D_AL, `O, `AD, `X, `R_D, `A_ZP, `O, `O, `O, `O, `X, `O, `O};
+	{`S_XX, `NON, 8'h91, `C_3}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_RD, `O, `AD, `O, `R_N, `A_ZP, `X, `O, `O, `O, `O, `O, `O};
+	{`S_XX, `NON, 8'h91, `C_4}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `W, `D_RA, `O, `AD, `O, `R_N, `A_DL, `O, `X, `O, `O, `O, `O, `O};
+	{`S_XX, `NON, 8'h91, `C_5}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `O, `X};
 	// STA zpg
 	{`S_XX, `NON, 8'h85, `C_0}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `R, `D_DI, `O, `AD, `O, `R_N, `A_PC, `O, `O, `O, `O, `O, `X, `O};
 	{`S_XX, `NON, 8'h85, `C_1}: x <= {`E_0, `O, `O, `O, `O, `O, `O, `O, `SR_0, `A_N, `OP_XXX, `W, `D_RA, `O, `AD, `O, `R_N, `A_ZP, `O, `X, `O, `O, `O, `X, `O};
