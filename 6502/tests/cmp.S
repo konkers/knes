@@ -2,7 +2,7 @@
 .byte "NES", 26, 2, 1
 
 .segment "VECTORS"
-.word 0, 0, 0, nmi, reset, irq
+.word nmi, reset, irq
 
 .segment "STARTUP"
 
