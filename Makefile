@@ -17,7 +17,10 @@ include build/verilator-sim.mk
 MODULE_NAME := k6502-test
 MODULE_SRCS := \
 	6502/clockgen.sv \
+	6502/input_data_latch.sv \
 	6502/k6502.sv \
+	6502/register_adder_hold.sv \
+	6502/register_index.sv \
 	6502/register_single_in.sv
 MODULE_TESTBENCH := 6502/k6502_test.cpp
 MODULE_TOP := k6502
