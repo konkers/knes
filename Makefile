@@ -38,6 +38,12 @@ MODULE_TESTBENCH := 6502/register_index_test.cpp
 MODULE_TOP := register_index
 include build/verilator-sim.mk
 
+MODULE_NAME := register-double-in-test
+MODULE_SRCS := 6502/register_double_in.sv
+MODULE_TESTBENCH := 6502/register_double_in_test.cpp
+MODULE_TOP := register_double_in
+include build/verilator-sim.mk
+
 MODULE_NAME := register-single-in-test
 MODULE_SRCS := 6502/register_single_in.sv
 MODULE_TESTBENCH := 6502/register_single_in_test.cpp
