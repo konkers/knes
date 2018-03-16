@@ -5,6 +5,8 @@ typedef struct packed {
 `else
 typedef struct {
 `endif
+    bit ac_db;
+    bit ac_sb;
     bit add_adl;
     bit add_sb_6_0;
     bit add_sb_7;
@@ -13,10 +15,12 @@ typedef struct {
     bit dl_adh;
     bit dl_adl;
     bit dl_db;
+    bit sb_add;
     bit sb_x;
     bit sb_y;
     bit x_sb;
     bit y_sb;
+    bit z_add;
 } control_signals_t;
 
 // 6502 toplevel module.
@@ -44,45 +48,65 @@ wire [7:0] sb_bus;
 wire [7:0] adl_bus;
 wire [7:0] adh_bus;
 
-control_signals_t control_signals;
+control_signals_t ctl;
 
 // Address Bus High Register (ABH)
 register_single_in abh_reg(
     .data_in(adh_bus),
-    .load(ph1 & control_signals.adh_abh),
+    .load(ph1 & ctl.adh_abh),
     .data_out(a[15:8])
 );
 
 // Address Bus Low Register (ABL)
 register_single_in abl_reg(
     .data_in(adl_bus),
-    .load(ph1 & control_signals.adl_abl),
+    .load(ph1 & ctl.adl_abl),
     .data_out(a[7:0])
 );
 
 // X Index Register (X)
 register_index x_reg(
     .data(sb_bus),
-    .load(control_signals.sb_x),
-    .bus_enable(control_signals.x_sb)
+    .load(ctl.sb_x),
+    .bus_enable(ctl.x_sb)
 );
 
 // Y Index Register (Y)
 register_index y_reg(
     .data(sb_bus),
-    .load(control_signals.sb_y),
-    .bus_enable(control_signals.y_sb)
+    .load(ctl.sb_y),
+    .bus_enable(ctl.y_sb)
+);
+
+wire [7:0] ac_out;
+// Accumulator Register (AC)
+register_double_in ac_reg(
+    .data_in0(db_bus),
+    .load0(ctl.ac_db),
+    .data_in1(sb_bus),
+    .load1(ctl.ac_sb),
+    .data_out(ac_out)
+);
+
+wire [7:0] ai_out;
+// A Input Register (AI)
+register_double_in ai_reg(
+    .data_in0(8'b0),
+    .load0(ctl.z_add),
+    .data_in1(sb_bus),
+    .load1(ctl.sb_add),
+    .data_out(ai_out)
 );
 
 // Input Data Latch (DL)
 input_data_latch dl_reg(
     .data_in(d),
     .load(ph2),
-    .bus_enable0(control_signals.dl_db),
+    .bus_enable0(ctl.dl_db),
     .data_out0(db_bus),
-    .bus_enable1(control_signals.dl_adl),
+    .bus_enable1(ctl.dl_adl),
     .data_out1(adl_bus),
-    .bus_enable2(control_signals.dl_adh),
+    .bus_enable2(ctl.dl_adh),
     .data_out2(adh_bus)
 );
 
@@ -101,10 +125,10 @@ register_adder_hold add_reg(
     .data_in(alu_out),
     .load(ph2),
     .data_out0(adl_bus),
-    .bus_enable0(control_signals.add_adl),
+    .bus_enable0(ctl.add_adl),
     .data_out1(sb_bus),
-    .bus_enable1_0_6(control_signals.add_sb_6_0),
-    .bus_enable1_7(control_signals.add_sb_7)
+    .bus_enable1_0_6(ctl.add_sb_6_0),
+    .bus_enable1_7(ctl.add_sb_7)
 );
 
 endmodule
