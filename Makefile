@@ -58,6 +58,13 @@ MODULE_TESTBENCH := 6502/register_single_in_test.cpp
 MODULE_TOP := register_single_in
 include build/verilator-sim.mk
 
+MODULE_NAME := register-triple-in-test
+MODULE_SRCS := 6502/register_triple_in.sv
+MODULE_TESTBENCH := 6502/register_triple_in_test.cpp
+MODULE_TOP := register_triple_in
+include build/verilator-sim.mk
+
+
 clean::
 	rm -rf sim synth out
 
