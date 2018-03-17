@@ -15,6 +15,7 @@ typedef struct {
     bit dl_adh;
     bit dl_adl;
     bit dl_db;
+    bit sb_ac;
     bit sb_add;
     bit sb_x;
     bit sb_y;
@@ -88,6 +89,28 @@ register_double_in ai_reg(
     .data_out(ai_out)
 );
 
+wire [7:0] alu_out;
+// Adder Hold Register (ADD)
+register_adder_hold add_reg(
+    .data_in(alu_out),
+    .load(ph2),
+    .data_out0(adl_bus),
+    .bus_enable0(ctl.add_adl),
+    .data_out1(sb_bus),
+    .bus_enable1_0_6(ctl.add_sb_6_0),
+    .bus_enable1_7(ctl.add_sb_7)
+);
+
+// TODO(#1): Decimal adjust register is not implemented and routed around.
+register_ac ac_reg(
+    .data_in(sb_bus),
+    .load(ctl.sb_ac),
+    .data_out0(db_bus),
+    .bus_enable0(ctl.ac_db),
+    .data_out1(sb_bus),
+    .bus_enable1(ctl.ac_sb)
+);
+
 // Input Data Latch (DL)
 input_data_latch dl_reg(
     .data_in(d),
@@ -100,25 +123,12 @@ input_data_latch dl_reg(
     .data_out2(adh_bus)
 );
 
-// Pre Decode Register (PD)
 wire [7:0] pre_decode_out;
+// Pre Decode Register (PD)
 register_single_in pd_reg(
     .data_in(d),
     .load(ph2),
     .data_out(pre_decode_out)
-);
-
-wire [7:0] alu_out;
-
-// Adder Hold Register (ADD)
-register_adder_hold add_reg(
-    .data_in(alu_out),
-    .load(ph2),
-    .data_out0(adl_bus),
-    .bus_enable0(ctl.add_adl),
-    .data_out1(sb_bus),
-    .bus_enable1_0_6(ctl.add_sb_6_0),
-    .bus_enable1_7(ctl.add_sb_7)
 );
 
 endmodule

@@ -19,6 +19,7 @@ MODULE_SRCS := \
 	6502/clockgen.sv \
 	6502/input_data_latch.sv \
 	6502/k6502.sv \
+	6502/register_ac.sv \
 	6502/register_adder_hold.sv \
 	6502/register_index.sv \
 	6502/register_double_in.sv \
@@ -31,6 +32,12 @@ MODULE_NAME := register-adder-hold-test
 MODULE_SRCS := 6502/register_adder_hold.sv
 MODULE_TESTBENCH := 6502/register_adder_hold_test.cpp
 MODULE_TOP := register_adder_hold
+
+include build/verilator-sim.mk
+MODULE_NAME := register-ac-test
+MODULE_SRCS := 6502/register_ac.sv
+MODULE_TESTBENCH := 6502/register_ac_test.cpp
+MODULE_TOP := register_ac
 include build/verilator-sim.mk
 
 MODULE_NAME := register-index-test
