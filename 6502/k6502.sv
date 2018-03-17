@@ -12,6 +12,9 @@ typedef struct {
     bit add_sb_7;
     bit adh_abh;
     bit adl_abl;
+    bit adl_add;
+    bit db_add;
+    bit db_n_add;
     bit dl_adh;
     bit dl_adl;
     bit dl_db;
@@ -87,6 +90,18 @@ register_double_in ai_reg(
     .data_in1(sb_bus),
     .load1(ctl.sb_add),
     .data_out(ai_out)
+);
+
+wire [7:0] bi_out;
+// B Input Register (BI)
+register_triple_in bi_reg(
+    .data_in0(~db_bus),
+    .load0(ctl.db_n_add),
+    .data_in1(db_bus),
+    .load1(ctl.db_add),
+    .data_in2(adl_bus),
+    .load2(ctl.adl_add),
+    .data_out(bi_out)
 );
 
 wire [7:0] alu_out;
