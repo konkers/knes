@@ -19,6 +19,7 @@ MODULE_SRCS := \
 	6502/clockgen.sv \
 	6502/input_data_latch.sv \
 	6502/k6502.sv \
+	6502/pc_increment.sv \
 	6502/register_ac.sv \
 	6502/register_adder_hold.sv \
 	6502/register_index.sv \
