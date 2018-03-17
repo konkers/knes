@@ -27,14 +27,14 @@ class InputDataLatchTest : public Testbench<Vinput_data_latch>
 
         for (int i = 0; i < 8; i++) {
             dut->bus_enable0 = i & (1 << 0);
-            dut->bus_enable1 = i & (1 << 0);
-            dut->bus_enable2 = i & (1 << 0);
+            dut->bus_enable1 = i & (1 << 1);
+            dut->bus_enable2 = i & (1 << 2);
 
             eval();
 
             EXPECT_EQ(dut->bus_enable0 ? value : 0x0, dut->data_out0);
             EXPECT_EQ(dut->bus_enable1 ? value : 0x0, dut->data_out1);
-            EXPECT_EQ(dut->bus_enable1 ? value : 0x0, dut->data_out1);
+            EXPECT_EQ(dut->bus_enable2 ? value : 0x0, dut->data_out2);
         }
     }
 };
