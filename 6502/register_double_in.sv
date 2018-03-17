@@ -1,8 +1,7 @@
 `timescale 1ns / 1ps
 
-// A register with a single input and a single output.  These are used in
-// several places including the Predecode, Address Bus High, and Address Bus
-// Low registers.
+// A register with two inputs an a single output.  These is used for the
+// B input regisser and the Program Counter Select Registers.
 //
 // load0 takes priority over load1.  However, if load1 is active, a load0
 // transistion will be ignored.
