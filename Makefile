@@ -29,12 +29,18 @@ MODULE_TESTBENCH := 6502/k6502_test.cpp
 MODULE_TOP := k6502
 include build/verilator-sim.mk
 
+MODULE_NAME := pc-increment-test
+MODULE_SRCS := 6502/pc_increment.sv
+MODULE_TESTBENCH := 6502/pc_increment_test.cpp
+MODULE_TOP := pc_increment
+include build/verilator-sim.mk
+
 MODULE_NAME := register-adder-hold-test
 MODULE_SRCS := 6502/register_adder_hold.sv
 MODULE_TESTBENCH := 6502/register_adder_hold_test.cpp
 MODULE_TOP := register_adder_hold
-
 include build/verilator-sim.mk
+
 MODULE_NAME := register-ac-test
 MODULE_SRCS := 6502/register_ac.sv
 MODULE_TESTBENCH := 6502/register_ac_test.cpp
