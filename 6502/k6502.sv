@@ -78,16 +78,6 @@ register_index y_reg(
     .bus_enable(ctl.y_sb)
 );
 
-wire [7:0] ac_out;
-// Accumulator Register (AC)
-register_double_in ac_reg(
-    .data_in0(db_bus),
-    .load0(ctl.ac_db),
-    .data_in1(sb_bus),
-    .load1(ctl.ac_sb),
-    .data_out(ac_out)
-);
-
 wire [7:0] ai_out;
 // A Input Register (AI)
 register_double_in ai_reg(
