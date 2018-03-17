@@ -12,12 +12,16 @@ typedef struct {
     bit add_sb_7;
     bit adh_abh;
     bit adl_abl;
+    bit adh_pch;
+    bit adl_pcl;
     bit adl_add;
     bit db_add;
     bit db_n_add;
     bit dl_adh;
     bit dl_adl;
     bit dl_db;
+    bit pch_pch;
+    bit pcl_pcl;
     bit sb_ac;
     bit sb_add;
     bit sb_x;
@@ -53,6 +57,29 @@ wire [7:0] adl_bus;
 wire [7:0] adh_bus;
 
 control_signals_t ctl;
+
+wire [7:0] pcls_out;
+wire [7:0] pcl_out;
+// Program Counter Low Select Register (PCLS)
+register_double_in pcls_regs(
+    .data_in0(pcl_out),
+    .load0(ctl.pcl_pcl),
+    .data_in1(adl_bus),
+    .load1(ctl.adl_pcl),
+    .data_out(pcls_out)
+);
+
+// TODO(#2): Merge this and PCLS into a single module.
+wire [7:0] pchs_out;
+wire [7:0] pch_out;
+// Program Counter High Select Register (PCHS)
+register_double_in pchs_regs(
+    .data_in0(pch_out),
+    .load0(ctl.pch_pch),
+    .data_in1(adh_bus),
+    .load1(ctl.adh_pch),
+    .data_out(pchs_out)
+);
 
 // Address Bus High Register (ABH)
 register_single_in abh_reg(
