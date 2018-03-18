@@ -33,6 +33,7 @@ GTEST_DIR := third_party/googletest/googletest
 GTEST_LIB := sim/libgtest.a
 GTEST_INC := $(GTEST_DIR)/include 
 $(GTEST_LIB): $(GTEST_DIR)/src/gtest-all.cc
+	@mkdir -p sim
 	$(CXX) $(CXXFLAGS) -isystem $(GTEST_INC) -I$(GTEST_DIR) \
     	-pthread -c $(GTEST_DIR)/src/gtest-all.cc \
     	-o sim/gtest-all.o
@@ -42,6 +43,7 @@ $(GTEST_LIB): $(GTEST_DIR)/src/gtest-all.cc
 TESTBENCH_LIB := sim/libtestbench.a
 TESTBENCH_INC := testbench
 $(TESTBENCH_LIB): testbench/testbench.cpp
+	@mkdir -p sim
 	$(CXX) $(CXXFLAGS) -isystem $(GTEST_INC) \
     	-pthread -c $^ \
     	-o sim/testbench.o
