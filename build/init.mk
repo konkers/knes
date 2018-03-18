@@ -4,7 +4,7 @@
 ## http://www.apache.org/licenses/LICENSE-2.0
 
 VERILATOR := verilator
-VERILATOR_ROOT :=  /Users/konkers/homebrew/Cellar/verilator/3.920/share/verilator
+VERILATOR_ROOT := $(shell $(VERILATOR) --getenv VERILATOR_ROOT)
 
 VIVADOPATH := /work/xilinx/Vivado/2014.3
 XSDKPATH := /work/xilinx/SDK/2014.3
