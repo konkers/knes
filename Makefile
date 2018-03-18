@@ -24,6 +24,7 @@ MODULE_SRCS := \
 	6502/register_adder_hold.sv \
 	6502/register_index.sv \
 	6502/register_double_in.sv \
+	6502/register_pc.sv \
 	6502/register_single_in.sv \
 	6502/register_triple_in.sv
 MODULE_TESTBENCH := 6502/k6502_test.cpp

@@ -21,7 +21,11 @@ typedef struct {
     bit dl_adl;
     bit dl_db;
     bit i_pc;
+    bit pch_adh;
+    bit pch_db;
     bit pch_pch;
+    bit pcl_adl;
+    bit pcl_db;
     bit pcl_pcl;
     bit sb_ac;
     bit sb_add;
@@ -81,6 +85,16 @@ pc_increment pcl_inc(
     .data_out(pcl_inc_out)
 );
 
+register_pc pcl_reg(
+    .data_in(pcl_inc_out),
+    .load(ph2),
+    .data_out0(db_bus),
+    .bus_enable0(ctl.pcl_db),
+    .data_out1(adl_bus),
+    .bus_enable1(ctl.pcl_adl),
+    .pc_out(pcl_out)
+);
+
 // TODO(#2): Merge this and PCLS into a single module.
 wire [7:0] pchs_out;
 wire [7:0] pch_out;
@@ -102,6 +116,16 @@ pc_increment pch_inc(
     .carry_out(pch_c),
     .half_carry_out(pchc),
     .data_out(pch_inc_out)
+);
+
+register_pc pch_reg(
+    .data_in(pch_inc_out),
+    .load(ph2),
+    .data_out0(db_bus),
+    .bus_enable0(ctl.pch_db),
+    .data_out1(adh_bus),
+    .bus_enable1(ctl.pch_adh),
+    .pc_out(pch_out)
 );
 
 // Address Bus High Register (ABH)
