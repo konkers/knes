@@ -3,7 +3,11 @@
 ## Licensed under the Apache License, Version 2.0 
 ## http://www.apache.org/licenses/LICENSE-2.0
 
-VERILATOR := verilator
+SRC_ROOT := $(abspath .)
+HOST_OS := $(shell uname | tr '[:upper:]' '[:lower:]')
+
+VERILATOR_PREBUILT_DIR := $(SRC_ROOT)/prebuilts/verilator/$(HOST_OS)
+VERILATOR := $(VERILATOR_PREBUILT_DIR)/bin/verilator
 VERILATOR_ROOT := $(shell $(VERILATOR) --getenv VERILATOR_ROOT)
 
 VIVADOPATH := /work/xilinx/Vivado/2014.3
@@ -48,3 +52,11 @@ $(TESTBENCH_LIB): testbench/testbench.cpp
     	-pthread -c $^ \
     	-o sim/testbench.o
 	ar -rv sim/libtestbench.a sim/testbench.o
+
+.phony: verilator
+verilator:
+	cd third_party/verilator/ && \
+		autoconf && \
+		./configure --prefix=$(VERILATOR_PREBUILT_DIR) && \
+		make && \
+		make install
