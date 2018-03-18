@@ -89,8 +89,4 @@ list-all-targets::
 
 .phony: run-all-tests
 run-all-tests: $(ALL_TESTS)
-	@for x in $(ALL_TESTS); do \
-		echo ; \
-		echo "Running $$x"; \
-		./$$x; \
-    done
+	@go run ./run_tests.go --verbose $(ALL_TESTS)
