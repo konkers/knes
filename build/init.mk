@@ -30,7 +30,7 @@ ALL_TESTS :=
 # default: assume build is adjacent to top level Makefile
 BUILD ?= build
 
-CXXFLAGS := -std=c++14 -I$(VERILATOR_ROOT)/include
+CXXFLAGS := -std=c++11 -I$(VERILATOR_ROOT)/include
 
 # gtest library for verilator testbenches
 GTEST_DIR := third_party/googletest/googletest
