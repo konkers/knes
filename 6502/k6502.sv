@@ -28,9 +28,11 @@ typedef struct {
     bit pcl_db;
     bit pcl_pcl;
     bit s_adl;
+    bit s_s;
     bit s_sb;
     bit sb_ac;
     bit sb_add;
+    bit sb_s;
     bit sb_x;
     bit sb_y;
     bit x_sb;
@@ -174,6 +176,15 @@ register_single_in pch_reg(
     .data_in(pch_inc_out),
     .load(ph2),
     .data_out(reg_pch_out)
+);
+
+// Stack Pointer Register (S)
+// I'm unclear on how the hold signal (ctl.s_s) is supposed to work.  For
+// now, it's used to mask load (ctl.sb_s).
+register_single_in s_reg(
+    .data_in(sb_value),
+    .load(ctl.sb_s & ~ctl.s_s),
+    .data_out(reg_s_out)
 );
 
 // Address Bus High Register (ABH)
