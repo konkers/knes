@@ -2,6 +2,23 @@ all: list-all-targets
 
 include build/init.mk
 
+MODULE_NAME := bus-bit-test
+MODULE_SRCS := \
+	6502/bus_bit.sv \
+	6502/bus_bit_test.sv
+MODULE_TESTBENCH := 6502/bus_bit_test.cpp
+MODULE_TOP := bus_bit_test
+include build/verilator-sim.mk
+
+MODULE_NAME := bus-test
+MODULE_SRCS := \
+	6502/bus.sv \
+	6502/bus_bit.sv \
+	6502/bus_test.sv
+MODULE_TESTBENCH := 6502/bus_test.cpp
+MODULE_TOP := bus_test
+include build/verilator-sim.mk
+
 MODULE_NAME := clockgen-test
 MODULE_SRCS := 6502/clockgen.sv
 MODULE_TESTBENCH := 6502/clockgen_test.cpp
