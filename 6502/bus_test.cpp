@@ -15,7 +15,9 @@ class BusTest : public Testbench<Vbus_test>
         dut->driver_values = val0 | (val1 << 8) | (val2 << 16) | (val3 << 24);
         dut->driver_enables = enable0 | (enable1 << 1) | (enable2 << 2) | (enable3 << 3);
         dut->pull_down_enables = pull_downs;
+
         eval();
+
         uint8_t expected_val = ~pull_downs;
         if (enable0) {
             expected_val &= val0;
@@ -31,6 +33,7 @@ class BusTest : public Testbench<Vbus_test>
         }
 
         EXPECT_EQ(expected_val, dut->value);
+        EXPECT_EQ(enable0 | enable1 | enable2 | enable3, dut->is_driven);
     }
 };
 

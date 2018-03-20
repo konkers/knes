@@ -4,6 +4,7 @@ module bus #(
     parameter N
 ) ( 
     output wire [7:0] value,
+    output wire is_driven,
     input wire [N-1:0][7:0] driver_values,
     input wire [N-1:0] driver_enables,
     input wire [7:0] pull_down_enables
@@ -19,13 +20,16 @@ always_comb begin
 end 
 
 // value before pull downs.
-wire [7:0] pre_value;
+wire [7:0] pre_pd_value;
 generate
     genvar i;
     for (i=0; i < 8; i++)
-        bus_bit #(N) bit_n(pre_value[i], bits[i], driver_enables);
+        bus_bit #(N) bit_n(pre_pd_value[i], bits[i], driver_enables);
 endgenerate
 
-assign value = pre_value & ~pull_down_enables;
+always_comb begin
+    is_driven = |driver_enables;
+    value = pre_pd_value & ~pull_down_enables;
+end
 
 endmodule
