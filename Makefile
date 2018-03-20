@@ -37,7 +37,9 @@ MODULE_SRCS := \
 	6502/bus.sv \
 	6502/bus_bit.sv \
 	6502/clockgen.sv \
+	6502/control_signals.sv \
 	6502/k6502.sv \
+	6502/k6502_data.sv \
 	6502/pc_increment.sv \
 	6502/register_double_in.sv \
 	6502/register_single_in.sv \
