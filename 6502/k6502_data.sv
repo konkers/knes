@@ -21,16 +21,22 @@ wire [7:0] reg_x_out;
 wire [7:0] reg_y_out;
 
 wire [7:0] db_value;
+wire [7:0] db_pre_pass_value;
+wire db_driven;
 bus #(4) db_bus(
-    .value(db_value),
+    .value(db_pre_pass_value),
+    .is_driven(db_driven),
     .driver_values({reg_dl_out, reg_pch_out, reg_pch_out, reg_ac_out}),
     .driver_enables({ctl.dl_db, ctl.pcl_db, ctl.pch_db, ctl.ac_db}),
     .pull_down_enables(8'b0)
 );
 
 wire [7:0] sb_value;
+wire [7:0] sb_pre_pass_value;
+wire sb_driven;
 bus #(6) sb_bus(
-    .value(sb_value),
+    .value(sb_pre_pass_value),
+    .is_driven(sb_driven),
     .driver_values({
         reg_s_out,
         {1'b1, reg_add_out[6:0]},
@@ -49,22 +55,47 @@ bus #(6) sb_bus(
 );
 
 wire [7:0] adl_value;
+wire adl_driven;
 bus #(4) adl_bus(
     .value(adl_value),
+    .is_driven(adl_driven),
     .driver_values({reg_dl_out, reg_pcl_out, reg_s_out, reg_add_out}),
     .driver_enables({ctl.dl_adl, ctl.pcl_adl, ctl.s_adl, ctl.add_adl}),
     .pull_down_enables({5'b0, ctl.z_adl2, ctl.z_adl1, ctl.z_adl0})
 );
 
 wire [7:0] adh_value;
+wire [7:0] adh_pre_pass_value;
+wire adh_driven;
 bus #(2) adh_bus(
-    .value(adh_value),
+    .value(adh_pre_pass_value),
+    .is_driven(adh_driven),
     .driver_values({reg_dl_out, reg_pch_out}),
     .driver_enables({ctl.dl_adh, ctl.pch_adh}),
     .pull_down_enables({
         ctl.z_adh7_1, ctl.z_adh7_1, ctl.z_adh7_1, ctl.z_adh7_1,
         ctl.z_adh7_1, ctl.z_adh7_1, ctl.z_adh7_1, ctl.z_adh0})
 );
+
+// Pass Mosfets
+wire [7:0] sb_db_val;
+wire [7:0] sb_adh_val;
+pass_mosfets sb_db_pass(
+    {sb_pre_pass_value, db_pre_pass_value},
+    {sb_driven, db_driven},
+    ctl.sb_db,
+    {sb_db_val, db_value}
+);
+
+pass_mosfets sb_adh_pass(
+    {sb_pre_pass_value, adh_pre_pass_value},
+    {sb_driven, adh_driven},
+    ctl.sb_adh,
+    {sb_adh_val, db_value}
+);
+
+// This relies on the fact that an undriven bus will be pulled to 0xff.
+assign sb_value = sb_db_val & sb_adh_val;
 
 wire [7:0] pcls_out;
 // Program Counter Low Select Register (PCLS)
