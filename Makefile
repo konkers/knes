@@ -2,6 +2,13 @@ all: list-all-targets
 
 include build/init.mk
 
+MODULE_NAME := alu-test
+MODULE_SRCS := \
+	6502/alu.sv
+MODULE_TESTBENCH := 6502/alu_test.cpp
+MODULE_TOP := alu
+include build/verilator-sim.mk
+
 MODULE_NAME := bus-bit-test
 MODULE_SRCS := \
 	6502/bus_bit.sv \
