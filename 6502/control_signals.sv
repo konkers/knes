@@ -3,43 +3,67 @@ typedef struct packed {
 `else
 typedef struct {
 `endif
-    bit ac_db;
-    bit ac_sb;
-    bit add_adl;
-    bit add_sb_6_0;
-    bit add_sb_7;
-    bit adh_abh;
-    bit adl_abl;
-    bit adh_pch;
-    bit adl_pcl;
-    bit adl_add;
-    bit db_add;
-    bit db_n_add;
-    bit dl_adh;
-    bit dl_adl;
-    bit dl_db;
-    bit i_pc;
-    bit pch_adh;
-    bit pch_db;
-    bit pch_pch;
-    bit pcl_adl;
-    bit pcl_db;
-    bit pcl_pcl;
-    bit s_adl;
-    bit s_s;
-    bit s_sb;
-    bit sb_ac;
-    bit sb_add;
-    bit sb_s;
-    bit sb_x;
-    bit sb_y;
-    bit x_sb;
-    bit y_sb;
-    bit z_adh0;
-    bit z_adh7_1;
-    bit z_adl0;
-    bit z_adl1;
-    bit z_adl2;
-    bit z_add;
+    bit ac_db;  // AC/DB
+    bit ac_sb;  // AC/SB
+    bit acr_c;  // ACR/C
+    bit add_adl;  // ADD/ADL
+    bit add_sb_6_0;  // ADD/SB(0-6)
+    bit add_sb_7;  // ADD/SB(7)
+    bit adh_abh;  // ADH/ABH
+    bit adl_abl;  // ADL/ABL
+    bit adh_pch;  // ADH/PCH
+    bit adl_pcl;  // ADL/PCL
+    bit adl_add;  // ADL/ADD
+    bit ands;  // ANDS
+    bit avr_b;  // AVR/V
+    bit db_add;  // DB/ADD
+    bit db_n_add;  // ~DB/ADD
+    bit db0_c;  // DB0/C
+    bit db1_z;  // DB1/Z
+    bit db2_i;  // DB2/I
+    bit db3_d;  // DB3/D
+    bit db6_v;  // DB6/V
+    bit db7_n;  // DB7/N
+    bit dbz_z;  // DBZ/Z
+    bit daa;  // DAA
+    bit dsa;  // DSA
+    bit dl_adh;  // DL/ADH
+    bit dl_adl;  // DL/ADL
+    bit dl_db;  // DL/DB
+    bit eors;  // EORS
+    bit i_addc;  // I/ADDC
+    bit i_pc;  // I/PC
+    bit i_v;  // I/V
+    bit ir5_c;  // IR5/C
+    bit ir5_d;  // IR5/D
+    bit ir5_i;  // IR5/I
+    bit ors;  // ORS
+    bit p_db;  // P/DB
+    bit pch_adh;  // PCH/ADH
+    bit pch_db;  // PCH/DB
+    bit pch_pch;  // PCH/ADH
+    bit pcl_adl;  // PCL/ADL
+    bit pcl_db;  // PCL/DB
+    bit pcl_pcl;  // PCL/PCL
+    bit s_adl;  // S/ADL
+    bit s_s;  // S/S
+    bit s_sb;  // S/SB
+    bit sb_ac;  // SB/AC
+    bit sb_add;  // SB/ADD
+    bit sb_adh;  // SB/ADH
+    bit sb_db;  // SB/DB
+    bit sb_s;  // SB/S
+    bit sb_x;  // SB/X
+    bit sb_y;  // SB/Y
+    bit srs;  // SRS
+    bit sums;  // SUMS
+    bit x_sb;  // X/SB
+    bit y_sb;  // Y/SB
+    bit z_adh0;  // 0/ADH0
+    bit z_adh7_1;  // 0/ADH(1-7)
+    bit z_adl0;  // 0/ADL0
+    bit z_adl1;  // 0/ADL1
+    bit z_adl2;  // 0/ADL1
+    bit z_add;  // 0/ADD
 } control_signals_t;
 
