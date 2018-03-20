@@ -34,6 +34,7 @@ include build/verilator-sim.mk
 
 MODULE_NAME := k6502-test
 MODULE_SRCS := \
+	6502/alu.sv \
 	6502/bus.sv \
 	6502/bus_bit.sv \
 	6502/clockgen.sv \

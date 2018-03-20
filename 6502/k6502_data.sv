@@ -181,6 +181,26 @@ register_triple_in bi_reg(
 );
 
 wire [7:0] alu_out;
+wire avr;
+wire hc;
+wire acr;
+// Arithmetic, Logic With Decimal Carry Look-A-Head (CD)
+alu alu(
+    .a_in(ai_out),
+    .b_in(bi_out),
+    .decimal_enable(ctl.daa),
+    .carry_in(ctl.i_addc),
+    .sum_en(ctl.sums),
+    .and_en(ctl.ands),
+    .eor_en(ctl.eors),
+    .or_en(ctl.ors),
+    .shift_en(ctl.srs),
+    .data_out(alu_out),
+    .overflow(avr),
+    .half_carry(hc),
+    .carry(acr)
+);
+
 // Adder Hold Register (ADD)
 register_single_in add_reg(
     .data_in(alu_out),
