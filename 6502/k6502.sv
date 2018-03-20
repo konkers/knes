@@ -22,6 +22,7 @@ clockgen clockgen(
 
 control_signals_t ctl;
 
+control_signals control_signals(ctl);
 k6502_data data_half(d, a, ph1, ph2, ctl);
     
 
