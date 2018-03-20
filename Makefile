@@ -49,6 +49,12 @@ MODULE_TESTBENCH := 6502/k6502_test.cpp
 MODULE_TOP := k6502
 include build/verilator-sim.mk
 
+MODULE_NAME := pass-mosfets-test
+MODULE_SRCS := 6502/pass_mosfets.sv
+MODULE_TESTBENCH := 6502/pass_mosfets_test.cpp
+MODULE_TOP := pass_mosfets
+include build/verilator-sim.mk
+
 MODULE_NAME := pc-increment-test
 MODULE_SRCS := 6502/pc_increment.sv
 MODULE_TESTBENCH := 6502/pc_increment_test.cpp
